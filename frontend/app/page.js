@@ -6,7 +6,7 @@ export default function Home() {
         <main>
             <div>
                 <Image className="img"
-                    src="/bg.jpg"
+                    src="/images/bg.jpg"
                     alt="Sample Image"
                     width={612}
                     height={335}
