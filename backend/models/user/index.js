@@ -9,8 +9,8 @@ const UserSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
-    password: {type:String, required:true},
-    phoneNumber: [{ type: Number }],
+    password: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
   },
   {
     timestamps: true,
@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema(
 // attachments
 
 UserSchema.methods.generateJwtToken = function () {
-  return jwt.sign({ user: this._id.toString() }, process.env.APP_NAME);
+  return jwt.sign({ user: this._id.toString() }, process.env.APP_SECRET);
 };
 
 // helper functions
