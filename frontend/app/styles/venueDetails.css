@@ -27,11 +27,9 @@ img {
     position: relative;
 
 }
-.seemore:hover{
-    font-size: 25px;
-    transition: 0.5s;
-}
-.seemore a{
+
+.seemore span{
+    font-size: large;
     position: absolute;
     color: #cf1839;
 }
@@ -90,6 +88,57 @@ img {
     border: #cf183a;
     padding: 10px;
     border-radius: 5px;
+}
+
+.modal {
+    position: fixed;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    margin-top: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: white;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    height: 80%;
+    width: 70%;
+    border-radius: 5px;
+    text-align: center;
+    overflow-y: auto;
+    overflow-x: scroll;
+
+}
+
+
+.modal-img {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 25px;
+    padding: 15px;
+    width: auto;
+}
+button[role="button"]{
+    background-color: #cf1839;
+    border: #cf1839;
+    padding: 3px;
+    border-radius: 3px;
+    width: 40px;
+    position: absolute;
+    right:2%;
+    top: 2%;
+}
+.modal-close{
+    background-color: #cf1839;
+    border: #cf1839;
+    border-radius: 3px;
+    padding: 5px 10px;
+    margin-top: 15px;
 }
 
 

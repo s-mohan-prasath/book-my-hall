@@ -16,7 +16,7 @@ export default function SignIn() {
                 <div className="error"></div>
             </div>
             <div className="remember" >
-                <label hhtmlFor="remember">
+                <label htmlFor="remember">
                     <input type="checkbox" id="remember" />
                     <p>Remember me</p>
                 </label>
