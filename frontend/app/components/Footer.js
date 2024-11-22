@@ -27,7 +27,7 @@ export default function Footer() {
           <h6 className="footer-sitemap-title">Sitemap</h6>
           <ul className="footer-sitemap-list">
             <li><Link href="/">Home</Link></li>
-            <li><Link href="/venues">Venues</Link></li>
+            <li><Link href="/venueDetails">Venues</Link></li>
             <li><Link href="/signup">SignUp</Link></li>
             <li><Link href="/login">LogIn</Link></li>
           </ul>
