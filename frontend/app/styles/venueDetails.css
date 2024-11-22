@@ -1,5 +1,7 @@
+.venue-details{
+    margin:30px 60px;
+}
 .img-container{
-    padding: 25px 45px;
     display: grid;
     grid-template-columns: 1.8fr 1fr 1fr;
     grid-template-rows: 200px 200px;
@@ -25,14 +27,69 @@ img {
     position: relative;
 
 }
+.seemore:hover{
+    font-size: 25px;
+    transition: 0.5s;
+}
 .seemore a{
     position: absolute;
     color: #cf1839;
 }
 
 .seemore img{
-    filter: brightness(30%);
-    
+    filter: brightness(30%);   
+}
+
+.details{
+    border: 1px solid #777777;
+    border-radius: 5px;
+    margin-top: 20px;
+    padding: 0 2rem;
+}
+.venue-details h1{
+    color: #cf1839;
+}
+
+.list{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.det{
+    margin: 2rem 0;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    color: #626262;
+    font-size: 20px;
+}
+.title{
+    color: black;
+    font-size:large;
+    font-weight: bolder;
+    margin: 8px 0;
+}
+.event-calendar{
+    background-color:#cf183a;
+    width: 400px;
+    height: 250px;
+    margin: 35px auto;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white
+}
+.btn button{
+    background-color: #cf183a;
+    color: white;
+    border: #cf183a;
+    padding: 10px;
+    border-radius: 5px;
 }
 
 
