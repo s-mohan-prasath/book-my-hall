@@ -1,18 +1,79 @@
 
 .img{
     position: relative;
+    filter: brightness(50%);
 }
 .hero {
     position: absolute;
-    width: 60%;
+    width: 70%;
     height:80vh;
-    top:10.4%;
-    background-color: #222222bd;
-    color: #cf1839;
+    top:14%;
+    background: linear-gradient(45deg, #f7002e, #f01d44, #ff012f);
+    -webkit-background-clip: text;
+    color: transparent;
     font-size: 100px;
-    font-weight: 20%;
+    font-weight: 50%;
     padding: 5%;
+    padding-left: 10%;
 }
 .hero-span{
     color: aliceblue;
+}
+/* features */
+.features-container {
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.features-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.feature-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 22%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: scale(1.05);
+}
+
+.feature-image {
+    width: 100%;
+    height: auto;
+}
+
+.feature-content {
+    padding: 15px;
+    text-align: left;
+}
+
+.feature-content h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.feature-content p {
+    font-size: 1em;
+    color: #666;
 }

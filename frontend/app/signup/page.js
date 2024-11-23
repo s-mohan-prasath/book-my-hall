@@ -22,7 +22,7 @@ export default function SignIn() {
             </div >
             <div className="group-input" >
                 <input type="password" id="cpassword" name="cpassword" placeholder="" />
-                <label htmlFor="cpassword">Conform Password</label>
+                <label htmlFor="cpassword">Confirm Password</label>
                 <div className="error" ></div >
             </div >
             <div className="remember" >
