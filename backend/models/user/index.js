@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema(
 // attachments
 
 UserSchema.methods.generateJwtToken = function () {
-  return jwt.sign({ user: this._id.toString() }, process.env.APP_SECRET);
+  return jwt.sign({ user_id: this._id.toString() }, process.env.APP_SECRET);
 };
 
 // helper functions
@@ -35,13 +35,12 @@ UserSchema.statics.findByEmail = async ({ email }) => {
 
 UserSchema.statics.findByEmailAndPassword = async ({ email, password }) => {
   const user = await UserModel.findOne({ email });
-  console.log(user)
   if (!user) throw new Error("User does not exist !!! ");
 
   // Comparing Stored & Encrypted Password and (Encrypting user filled password)
   const doesPasswordMatch = await bcrypt.compare(password, user.password);
 
-  if (!doesPasswordMatch) throw new Error("Invalid Credentials !!!");
+  if (!doesPasswordMatch) throw new Error("Invalid Password !!!");
   return user;
 };
 

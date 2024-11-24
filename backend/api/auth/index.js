@@ -14,8 +14,9 @@ const Router = express.Router();
  */
 //TODO: WORK ON THE AUTH APIs
 Router.post("/signup", async (req, res) => {
+    let credentials = req.body;
     try {
-        const { email, password, name, phoneNumber } = req.body.credentials;
+        const { email, password, name, phoneNumber } = credentials;
         await ValidateSignUp(credentials);
         const user = await UserModel.findOne({ email });
         if (user) throw new Error("User Already Exists");
@@ -40,6 +41,7 @@ Router.post("/signin", async (req, res) => {
     try {
         await ValidateSignIn(credentials);
         const user = await UserModel.findByEmailAndPassword(credentials);
+        console.log(user)
         const token = await user.generateJwtToken();
         res.status(200).json({ token, status: "success" });
     } catch (error) {
