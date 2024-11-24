@@ -21,7 +21,7 @@
   .footer-title {
     font-size: 1.25rem;
     font-weight: bold;
-    color:white;
+    color:#cf1839;
   }
   
   .footer-description {
@@ -51,7 +51,7 @@
   
   .footer-sitemap-title {
     text-decoration: underline;
-    color: white;
+    color: #cf1839;
     font-size: 1.125rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
