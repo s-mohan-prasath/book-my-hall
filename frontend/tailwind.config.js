@@ -8,13 +8,27 @@ module.exports = {
     theme: {
         extend: {
             boxShadow: {
+                'custom': '5px 5px #bb1f3b',
                 myShadow1: "4.1px -5px 0 0 rgb(17,24,39)",
                 myShadow2: "-4.1px -5px 0 0 rgb(17,24,39)",
             },
             colors: {
                 primary: {
+                    light: '#f70430',
                     DEFAULT: '#cf1839',
+                    dark: '#bb1f3b',
+                    sign: 'rgb(252, 252, 252)'
+
                 },
+                seconadary: {
+                    DEFAULT: '#222222',
+                    light: '#222222ed',
+                    outline: '#777777',
+                }
+            },
+            transitionProperty: {
+                right: 'right',
+                left: 'left',
             },
         },
     },

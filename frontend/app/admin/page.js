@@ -43,7 +43,7 @@ export default function Admin() {
                     <button
                         key={index}
                         onClick={() => setActiveTab(index)}
-                        className={`bg-black rounded px-5 py-1.5 duration-300 text-white text-xl
+                        className={`bg-black rounded px-5 py-1.5 duration-300 text-white md:text-xl
                             ${activeTab === index ? 'bg-primary' : 'bg-black border border-primary'}`}
                     >
                         {tab.name}
@@ -51,12 +51,12 @@ export default function Admin() {
                 ))}
             </div>
 
-            <div className="mt-10 p-5 w-full mx-auto rounded">
+            <div className="mt-10 p-5 md:w-full mx-auto rounded">
                 {Array.isArray(tabs[activeTab].content) ? (
                     tabs[activeTab].content.map((event, index) => (
                         <div
                             key={index}
-                            className="border mx-10 py-5 px-10 flex justify-between rounded-md shadow-md bg-white mb-4"
+                            className="border mx-10 py-5 px-10 sm:flex justify-between rounded-md shadow-md bg-white mb-4"
                         >
                             <div className="flex flex-col gap-2">
                                 <h3 className="text-xl text-primary font-semibold">{event.hall}</h3>
@@ -65,7 +65,7 @@ export default function Admin() {
                                 <p><strong>Email :</strong> {event.email}</p>
                             </div>
 
-                            <div className="flex flex-col my-auto gap-4">
+                            <div className="mt-5  flex sm:flex-col sm:my-auto gap-4">
                                 {event.status === "confirmed" || event.status === "declined" ? (
                                     <p className="text-gray-500">{event.status === "confirmed" ? "Confirmed" : "Declined"}</p>
                                 ) : (
