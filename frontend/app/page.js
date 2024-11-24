@@ -39,13 +39,6 @@ export default function Home() {
                     <p>Feature description 3</p>
                 </div>
             </div>
-            <div class="feature-card">
-                <img src="image4.jpg" alt="Feature 4" class="feature-image"/>
-                <div class="feature-content">
-                    <h3>Feature Title 4</h3>
-                    <p>Feature description 4</p>
-                </div>
-            </div>
         </div>
     </div>
         </main >
