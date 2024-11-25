@@ -37,11 +37,11 @@
 
 .features {
     display: flex;
-    flex-direction: row; /* Ensure items are in a row 
+    flex-direction: row; /* Ensure items are in a row */
     justify-content: center;
     gap: 20px;
-    overflow-x: auto; /* Allows horizontal scrolling if needed 
-    padding: 10px 0; /* Add padding for better spacing 
+    overflow-x: auto; /* Allows horizontal scrolling if needed */
+    padding: 10px 0; /* Add padding for better spacing */
 }
 
 .feature-card {
@@ -51,7 +51,7 @@
     overflow: hidden;
     width: 250px;
     display: flex;
-    flex-direction: column; /* Align content vertically within each card 
+    flex-direction: column; /* Align content vertically within each card */
     align-items: center;
     transition: transform 0.2s ease;
 }
@@ -79,5 +79,5 @@
     font-size: 1em;
     color: #666;
 }
- */
+
 
