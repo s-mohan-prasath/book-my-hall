@@ -1,8 +1,10 @@
 "use client";
 import Link from 'next/link';
+import { useEffect } from 'react';
 import '../styles/signup.login.css';
+import { signup } from '../utils/authUtils';
 
-export default function SignIn() {
+export default async function SignIn() {
     return (
         <form action="" className="shadow-custom w-80 md:w-96 bg-primary-sign my-[10vh] mx-auto rounded-md p-8">
             <h1 className='text-primary mb-6 text-3xl font-bold'>Sign Up</h1>
@@ -35,7 +37,13 @@ export default function SignIn() {
                     <p className='my-0 mx-1'>Remember me</p>
                 </label>
             </div >
-            <button className='w-full bg-primary text-white text-base font-medium rounded-md border-none p-2 mt-[10%] mb-[5%] cursor-pointer transition-all duration-300 ease-linear hover:bg-primary-dark' type="submit">Sign Up</button>
+            <button className='w-full bg-primary text-white text-base font-medium rounded-md border-none p-2 mt-[10%] mb-[5%] cursor-pointer transition-all duration-300 ease-linear hover:bg-primary-dark' type="submit" onClick={()=>{
+                let name = document.getElementById('name')
+                let email = document.getElementById('email')
+                // let phoneNumber = document.getElementById('name')
+                let password = document.getElementById('password')
+                signup(name,email,phoneNumber="9025802851",password)
+            }}>Sign Up</button>
             <div className="account" >
                 <p>Have an account? <Link className='text-primary underline' href={"/login"}> Sign In</Link></p>
             </div >
