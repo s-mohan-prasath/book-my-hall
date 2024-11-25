@@ -1,2 +1,2 @@
 npm install react-icons //for importing react-icons
-npx nextui-cli@latest add modalcd 
+

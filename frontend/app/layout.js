@@ -16,7 +16,7 @@ const geistMono = localFont({
 
 export const metadata = {
     title: "Book My Hall",
-    description: "Designed By Team 11",
+    description: "Hustle free Event Management app",
 };
 
 export default function RootLayout({ children }) {
