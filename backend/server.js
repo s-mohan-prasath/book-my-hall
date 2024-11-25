@@ -1,5 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import cors from 'cors'
 
 import dotenv from "dotenv"
 import session from 'express-session'
@@ -15,6 +16,7 @@ const app = express()
 
 privateRouteConfig(passport)
 
+app.use(cors())
 app.use(express.json())
 app.use(session({ secret: process.env.APP_SECRET }))
 app.use(passport.initialize())

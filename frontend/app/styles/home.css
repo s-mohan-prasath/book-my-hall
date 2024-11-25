@@ -37,9 +37,11 @@
 
 .features {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    flex-direction: row; /* Ensure items are in a row */
+    justify-content: center;
     gap: 20px;
+    overflow-x: auto; /* Allows horizontal scrolling if needed */
+    padding: 10px 0; /* Add padding for better spacing */
 }
 
 .feature-card {
@@ -47,9 +49,9 @@
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    width: 22%;
+    width: 250px;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Align content vertically within each card */
     align-items: center;
     transition: transform 0.2s ease;
 }
