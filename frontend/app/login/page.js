@@ -57,7 +57,7 @@ export default function LogIn() {
             </div>
             <button className='w-full bg-primary text-white text-base font-medium rounded-md border-none p-2 mt-[10%] mb-[5%] cursor-pointer transition-all duration-300 ease-linear hover:bg-primary-dark' type="submit">Log In</button>
             <div className="text-center" >
-                <p>Don't have an account? <Link className='text-primary underline' href={"/signup"}> Sign Up</Link></p>
+                <p>Don&apos;t have an account? <Link className='text-primary underline' href={"/signup"}> Sign Up</Link></p>
             </div >
         </form >
     )

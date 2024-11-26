@@ -1,5 +1,6 @@
 'use client';
 import React from "react";
+import Image from "next/image";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { MdEventSeat } from "react-icons/md";
 import { FaBuilding } from "react-icons/fa";
@@ -15,19 +16,19 @@ export default function VenueDetails() {
             <h1 className="text-primary text-3xl font-bold py-5 flex justify-center lg:justify-start">Auditorium</h1>
             <div className="flex flex-wrap justify-center lg:grid grid-cols-[1.8fr,1fr,1fr] grid-rows-[200px,200px] gap-5">
                 <div className="box row-span-2">
-                    <img className="w-full h-full object-cover rounded" src='images/large.jpg' alt='Venue Images' />
+                    <Image className="w-full h-full object-cover rounded" src='/images/large.jpg' alt='Venue Images' width={500} height={400} />
                 </div>
                 <div className="box">
-                    <img className="w-full h-full object-cover rounded" src='images/img1.jpg' alt='Venue Images' />
+                    <Image className="w-full h-full object-cover rounded" src='/images/img1.jpg' alt='Venue Images' width={500} height={400} />
                 </div>
                 <div className="box">
-                    <img className="w-full h-full object-cover rounded" src='images/img2.jpg' alt='Venue Images' />
+                    <Image className="w-full h-full object-cover rounded" src='/images/img2.jpg' alt='Venue Images' width={500} height={400} />
                 </div>
                 <div className="box">
-                    <img className="w-full h-full object-cover rounded" src='images/img3.jpg' alt='Venue Images' />
+                    <Image className="w-full h-full object-cover rounded" src='/images/img3.jpg' alt='Venue Images' width={500} height={400} />
                 </div>
                 <div className="box flex justify-center items-center relative" onClick={onOpen} >
-                    <img className="w-full h-full object-cover rounded brightness-50" src='images/img6.jpg' alt='Venue Images' />
+                    <Image className="w-full h-full object-cover rounded brightness-50" src='/images/img6.jpg' alt='Venue Images' width={500} height={400} />
                     <span className="absolute text-lg text-white cursor-pointer">See More</span> </div>
             </div>
             <div className=' border border-seconadary-outline rounded-sm mt-5 px-8'>
@@ -50,20 +51,20 @@ export default function VenueDetails() {
                     <p className='text-black text-lg font-bold mt-2'>Projector</p>
                     <p id='projector'>Available</p></div>
             </div>
-            <div className="flex flex-row justify-end m-4"><button className='bg-primary text-white border border-primary p-2 rounded'>REQUEST FOR BOOKING </button></div>
+            <div className="flex flex-row justify-end m-8 "><button className='bg-primary text-white border border-primary p-2 rounded'>REQUEST FOR BOOKING </button></div>
             <div className='bg-primary w-64 lg:w-96 h-64 my-9 mx-auto rounded flex justify-center items-center text-white'>Event calendar</div>
 
-            <Modal className='fixed z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full mt-2.5 bg-black  border border-seconadary-outline' isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior={scrollBehavior} isDismissable={false} isKeyboardDismissDisabled={true}>
-                <ModalContent className='bg-white p-5 h-[80%] w-[70%] rounded text-center overflow-x-auto overflow-y-scroll'>
+            <Modal className='fixed z-10 md:top-72 max-xl top-1/2 left-[48%] transform -translate-x-1/2 -translate-y-1/2 w-full mx-auto mt-2.5 bg-black  border border-seconadary-outline' isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior={scrollBehavior} isDismissable={false} isKeyboardDismissDisabled={true}>
+                <ModalContent className='bg-white p-5 max-h-[95%] max-w-[85%] rounded text-center '>
                     {(onClose) => (
                         <>
                             <ModalHeader className="text-lg font-bold text-center mt-5 pb-0">Images</ModalHeader>
                             <ModalBody className='modal-body'>
                                 <div className="flex flex-col justify-center gap-6 p-4 w-auto">
-                                    <img className="rounded" src="images/img6.jpg" />
-                                    <img className="rounded" src="images/img5.jpg" />
-                                    <img className="rounded" src="images/img4.jpg" />
-                                    <img className="rounded" src="images/img7.jpg" />
+                                    <Image className="rounded" src="/images/img6.jpg" alt="venue images" width={1400} height={400} />
+                                    <Image className="rounded" src="/images/img5.jpg" alt="venue images" width={1400} height={400} />
+                                    <Image className="rounded" src="/images/img4.jpg" alt="venue images" width={1400} height={400} />
+                                    <Image className="rounded" src="/images/img7.jpg" alt="venue images" width={1400} height={400} />
                                 </div>
                             </ModalBody>
                             <ModalFooter>

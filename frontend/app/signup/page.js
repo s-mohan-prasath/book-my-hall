@@ -1,8 +1,10 @@
 "use client";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import '../styles/signup.login.css';
 
 export default function SignIn() {
+    const router = useRouter();
     async function makeSignUp(e) {
         e.preventDefault();
         const name = document.getElementById('name').value;
@@ -16,7 +18,7 @@ export default function SignIn() {
             return;
         }
         try {
-            await fetch('http://localhost:5000/auth/signup', {
+            let response = await fetch('http://localhost:5000/auth/signup', {
                 method: "POST",
                 body: JSON.stringify({
                     name, email, password, phoneNumber
@@ -24,11 +26,15 @@ export default function SignIn() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-            }).then((res) => {
-                return res.json()
-            }).then(data => {
-                console.log(data)
-            })
+            });
+            if (response.ok) {
+                router.push('/login')
+            }
+            const data = await response.json();
+            if (data.error == "User Already Exists") {
+                document.getElementById('error').textContent = "User Already Exists";
+                document.getElementById('error').style.marginBottom = "12px";
+            }
         } catch (error) {
             console.log(error.message)
         }
@@ -60,7 +66,7 @@ export default function SignIn() {
             <div className="flex flex-col gap-5 relative custom">
                 <input className='border-0 border-b-2 [border-color:#222222] w-full h-9 bg-transparent text-seconadary focus:outline-none text-s[15px]  ' type="password" id="cpassword" name="cpassword" placeholder="" required />
                 <label className='absolute left-0 top-0 transition-all duration-300 ' htmlFor="cpassword">Confirm Password</label>
-                <div className="text-center h-5 text-xl"></div>
+                <div className="text-center h-5 text-base text-primary" id='error'></div>
             </div >
             <div className="flex justify-between items-center text-seconadary ">
                 <label className='flex items-center' htmlFor="remember">
