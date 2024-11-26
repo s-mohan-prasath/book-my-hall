@@ -1,6 +1,6 @@
 "use client";
 import Link from 'next/link';
-import '../styles/signup.login.css';
+import '../../styles/signup.login.css';
 
 export default function SignIn() {
 

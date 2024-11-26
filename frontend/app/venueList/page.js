@@ -62,19 +62,23 @@ export default function Home() {
       </div>
 
       {/* Venue Grid */}
-      <div className="grid">
-        {venues.length > 0 ? (
-          venues.map((venue) => (
-            <div key={venue.id} className="card">
-              <p>Block: {venue.block}</p>
-              <p>Availability: {venue.availability}</p>
-              <p>Capacity: {venue.capacity}</p>
-            </div>
-          ))
-        ) : (
-          <p className="noResults">No venues found</p>
-        )}
-      </div>
+      {venues.length > 0 ? (
+        <div className="grid mx-auto">
+          {
+            venues.map((venue) => (
+              <div key={venue.id} className="card">
+                <p>Block: {venue.block}</p>
+                <p>Availability: {venue.availability}</p>
+                <p>Capacity: {venue.capacity}</p>
+              </div>
+            ))
+          }
+        </div>
+      ) : (
+        <div style={{ width: "100%", height: "50vh" }} className="flex flex-col justify-center items-center">
+          <p>No Venues Available</p>
+        </div>
+      )}
     </div>
   );
 }

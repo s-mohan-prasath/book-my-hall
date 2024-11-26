@@ -26,9 +26,9 @@ export default function VenueDetails() {
                 <div className="box">
                     <img className="w-full h-full object-cover rounded" src='images/img3.jpg' alt='Venue Images' />
                 </div>
-                <div className="box flex justify-center items-center relative">
-                    <img className="w-full h-full object-cover rounded brightness-50" src='images/img6.jpg' alt='Venue Images' onClick={onOpen} />
-                    <span className="absolute text-lg text-white">See More</span> </div>
+                <div className="box flex justify-center items-center relative" onClick={onOpen} >
+                    <img className="w-full h-full object-cover rounded brightness-50" src='images/img6.jpg' alt='Venue Images' />
+                    <span className="absolute text-lg text-white cursor-pointer">See More</span> </div>
             </div>
             <div className=' border border-seconadary-outline rounded-sm mt-5 px-8'>
                 <h2 className="p-3 text-2xl font-bold">Features</h2>
@@ -50,10 +50,8 @@ export default function VenueDetails() {
                     <p className='text-black text-lg font-bold mt-2'>Projector</p>
                     <p id='projector'>Available</p></div>
             </div>
+            <div className="flex flex-row justify-end m-4"><button className='bg-primary text-white border border-primary p-2 rounded'>REQUEST FOR BOOKING </button></div>
             <div className='bg-primary w-64 lg:w-96 h-64 my-9 mx-auto rounded flex justify-center items-center text-white'>Event calendar</div>
-            <div >
-                <button className='bg-primary text-white border border-primary p-2 rounded'>REQUEST FOR BOOKING </button>
-            </div>
 
             <Modal className='fixed z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full mt-2.5 bg-black  border border-seconadary-outline' isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior={scrollBehavior} isDismissable={false} isKeyboardDismissDisabled={true}>
                 <ModalContent className='bg-white p-5 h-[80%] w-[70%] rounded text-center overflow-x-auto overflow-y-scroll'>
