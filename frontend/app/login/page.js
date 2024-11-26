@@ -1,15 +1,17 @@
 "use client";
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import '../styles/signup.login.css';
 
 export default function LogIn() {
+    const router = useRouter();
     async function makeLogIn(e) {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
         try {
-            await fetch('http://localhost:5000/auth/signin', {
+            let response = await fetch('http://localhost:5000/auth/signin', {
                 method: "POST",
                 body: JSON.stringify({
                     email, password
@@ -17,11 +19,16 @@ export default function LogIn() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-            }).then((res) => {
-                return res.json()
-            }).then(data => {
-                console.log(data)
-            })
+            });
+
+            if (response.ok) {
+                router.push('/venueList')
+            }
+            else {
+                document.getElementById('error').innerText = "Invalid User Credential";
+                document.getElementById('error').style.marginBottom = "12px";
+            }
+
         } catch (error) {
             console.log(error.message)
         }
@@ -33,15 +40,15 @@ export default function LogIn() {
             <h1 className='text-primary mb-8 text-3xl font-bold'>Login</h1>
             <div className="flex flex-col gap-5 relative custom">
                 <input className='border-0 border-b-2 [border-color:#222222] w-full h-9 bg-transparent text-seconadary focus:outline-none  text-s[15px] ' type="email" id="email" name="email" placeholder="" />
-                <label className='absolute left-0 top-0 transition-all duration-300 ' htmlFor="email">Organization Email</label>
+                <label className='absolute left-0 top-0 transition-all duration-300 ' htmlFor="email">Institutional Email</label>
                 <div className="text-center h-5 text-xl"></div>
             </div>
             <div className="flex flex-col gap-5 relative custom">
                 <input className='border-0 border-b-2 [border-color:#222222] w-full h-9 bg-transparent text-seconadary focus:outline-none text-s[15px] ' type="password" id="password" name="password" placeholder="" />
                 <label className='absolute left-0 top-0 transition-all duration-300 ' htmlFor="password">Password</label>
-                <div className="text-center h-5 text-xl"></div>
+                <div className="text-center h-5 text-base text-primary" id='error'></div>
             </div>
-            <div className="flex justify-between items-center text-seconadary " >
+            <div className="flex justify-between items-center text-seconadary  " >
                 <label className='flex items-center' htmlFor="remember">
                     <input type="checkbox" id="remember" />
                     <p className='my-0 mx-1'> Remember me</p>
