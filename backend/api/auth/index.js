@@ -22,7 +22,12 @@ Router.post("/signup", async (req, res) => {
         if (user) throw new Error("User Already Exists");
         const newUser = await UserModel.create({ email, password, name, phoneNumber });
         const token = newUser.generateJwtToken();
-        return res.status(200).json({ token, status: "success" });
+        res.cookie("token",token,{
+            httpOnly:true,
+            maxAge:3600,
+            signed:true
+        })
+        return res.status(200).json({ status: "success" });
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
@@ -43,7 +48,12 @@ Router.post("/signin", async (req, res) => {
         const user = await UserModel.findByEmailAndPassword(credentials);
         console.log(user)
         const token = await user.generateJwtToken();
-        res.status(200).json({ token, status: "success" });
+        res.cookie("token",token,{
+            httpOnly:true,
+            maxAge:3600,
+            signed:true
+        })
+        res.status(200).json({ status: "success" });
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }

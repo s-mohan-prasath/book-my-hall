@@ -5,6 +5,7 @@ import cors from 'cors'
 import dotenv from "dotenv"
 import session from 'express-session'
 import passport from 'passport'
+import cookieParser from 'cookie-parser'
 
 import { UserModel, VenueModel, ImageModel, BookingModel, AdvanceBookingModel } from './models/allModels.js'
 import privateRouteConfig from './config/auth.config.js'
@@ -18,6 +19,10 @@ privateRouteConfig(passport)
 
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({
+    extended:true,
+}))
+app.use(cookieParser())
 app.use(session({ secret: process.env.APP_SECRET }))
 app.use(passport.initialize())
 app.use(passport.session())

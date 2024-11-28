@@ -38,7 +38,7 @@ AdminUserSchema.methods.generateJwtToken = function () {
     return jwt.sign(
         { admin_id: this._id.toString(), type: this.type },
         process.env.APP_SECRET,
-        { expiresIn: "1d" } // Token valid for 7 days
+        { expiresIn: "1h" } // Token valid for 1 day
     );
 };
 
