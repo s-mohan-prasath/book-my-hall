@@ -12,7 +12,6 @@ const Router = express.Router();
  * Access    Public
  * Method    POST
  */
-//TODO: WORK ON THE AUTH APIs
 Router.post("/signup", async (req, res) => {
     let credentials = req.body;
     try {

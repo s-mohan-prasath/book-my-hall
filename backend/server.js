@@ -9,6 +9,8 @@ import passport from 'passport'
 import { UserModel, VenueModel, ImageModel, BookingModel, AdvanceBookingModel } from './models/allModels.js'
 import privateRouteConfig from './config/auth.config.js'
 import Auth from './api/auth/index.js'
+import Image from './api/image/index.js'
+import AdminVenue from './api/admin/venue/index.js'
 import AdminAuth from './api/admin/auth/index.js'
 
 dotenv.config()
@@ -29,7 +31,9 @@ app.get("/", (req, res) => {
     })
 })
 app.use("/auth", Auth)
+app.use("/get-image", Image)
 app.use("/admin/auth", AdminAuth)
+app.use("/admin/venue", AdminVenue)
 
 let PORT = 5000
 app.listen(PORT, () => {
