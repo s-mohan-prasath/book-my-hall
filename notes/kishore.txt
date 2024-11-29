@@ -1,0 +1,2 @@
+npm install react-icons //for importing react-icons
+
