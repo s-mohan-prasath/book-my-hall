@@ -10,6 +10,7 @@ import { UserModel, VenueModel, ImageModel, BookingModel, AdvanceBookingModel } 
 import privateRouteConfig from './config/auth.config.js'
 import Auth from './api/auth/index.js'
 import Image from './api/image/index.js'
+import Venue from './api/venue/index.js'
 import AdminVenue from './api/admin/venue/index.js'
 import AdminAuth from './api/admin/auth/index.js'
 
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
     })
 })
 app.use("/auth", Auth)
+app.use("/venue", Venue)
 app.use("/get-image", Image)
 app.use("/admin/auth", AdminAuth)
 app.use("/admin/venue", AdminVenue)

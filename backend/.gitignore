@@ -1,2 +1,11 @@
 /node_modules
-/uploads
+
+#ignore images
+*.jpeg
+*.png
+*.jpg
+*.webp
+
+#ignore documents
+*.pdf
+*.doc

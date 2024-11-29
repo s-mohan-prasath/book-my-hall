@@ -5,8 +5,8 @@ import { fileURLToPath } from 'url';
 const Router = express.Router();
 
 // Emulating __dirname in ES Modules
-const __filename = fileURLToPath(import.meta.url); // Get current file path
-const __dirname = path.dirname(__filename);       // Get current directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename); 
 
 Router.get('/:filename', (req, res) => {
     const { filename } = req.params;

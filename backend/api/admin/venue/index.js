@@ -1,42 +1,40 @@
-import express from 'express'
-import multer from 'multer'
-import path from 'path'
-import { v4 as uuidv4 } from 'uuid'
+import express from 'express';
+import { ValidateAddVenue } from '../../../validate/venue.validate.js';
+import { venueImgDir } from '../../../config/multer.image.config.js';
+import { VenueModel } from '../../../models/allModels.js';
 
-const venueImgDir = multer({
-    storage: multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, 'uploads/images/venues/');
-        },
-        filename: (req, file, next) => {
-            const ext = path.extname(file.originalname)
-            const uniqueFileName = uuidv4() + ext
-            next(null, uniqueFileName)
-        }
-    }),
-    fileFilter: (req, file, next) => {
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-        if (allowedTypes.includes(file.mimetype)) {
-            next(null, true)
-        } else {
-            next(new Error('Invalid file type. Only JPEG and PNG are allowed'))
-        }
+const Router = express.Router();
+/**
+ * Route    /venue
+ * Des       add venues
+ * Params    none
+ * Access    private
+ * Method    POST
+ */
+
+//send multipart form data
+//TODO: work on creating image documentes in image collection and add the image id to the venue record
+Router.post('/', venueImgDir.array('venue-images', 5), async (req, res) => {
+  try {
+    const venueData = JSON.parse(req.body.venueData);
+    if (!req.files || req.files.length === 0) {
+      return res
+        .status(400)
+        .json({ status: 'failed', message: 'No image files were uploaded.' });
     }
-})
-
-const Router = express.Router()
-
-Router.post("/", venueImgDir.array('venue-images', 5), (req, res) => {
-    try {
-        if (!req.files || req.files.length === 0) {
-            return res.status(400).send("No files were uploaded.");
-        }
-        const venueImages = req.files.map(file => file.filename)
-        res.json({ "status": "success", venueImages: venueImages }).status(200)
-    } catch (e) {
-        res.json({ "error": e.message, "status": "failed" }).status(400)
-    }
+    await ValidateAddVenue(venueData);
+    const uploadedImages = req.files.map((file) => file.filename);
+    venueData.images = uploadedImages;
+    const venue = await VenueModel.create(venueData);
+    return res.json({
+      status: 'success',
+      message: 'Venue added successfully!',
+      venue,
+    });
+  } catch (e) {
+    // Handle errors
+    return res.status(400).json({ status: 'failed', error: e.message });
+  }
 });
 
-
-export default Router
+export default Router;
