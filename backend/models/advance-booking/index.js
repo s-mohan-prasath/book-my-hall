@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const AdvanceBookingSchema = new mongoose.Schema(
     {
-        booking_id: {
+        booking: {
             type: mongoose.Types.ObjectId,
             ref: "bookings",
             required: true,

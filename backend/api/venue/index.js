@@ -14,7 +14,7 @@ const Router = express()
 
 Router.get("/",passport.authenticate("jwt",{session:false}),async(req,res)=>{
     try{
-        let venues = await VenueModel.find()
+        let venues = await VenueModel.find().populate("image")
         return res.json({venues,message:"venues retrieved successfully"}).status(200)
     }catch(e){
         res.status(400).json({error:e.message,status:"failed"})

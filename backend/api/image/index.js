@@ -11,7 +11,6 @@ const __dirname = path.dirname(__filename);
 Router.get('/:filename', (req, res) => {
     const { filename } = req.params;
     const filePath = path.join(__dirname, '../../uploads/images/venues/', filename);
-    console.log(filePath)
     res.sendFile(filePath, (err) => {
         if (err) {
             res.status(404).json({ status: "failed", error: "Image not found!" });
