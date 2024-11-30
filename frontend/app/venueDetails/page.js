@@ -1,6 +1,15 @@
 'use client';
-import React from "react";
+
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+
+// EVENT CALENDAR
+
+import { Calendar, dayjsLocalizer } from "react-big-calendar"
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
+import dayjs from "dayjs"
+import { useCallback, useState } from "react"
+
+// ICONS
 import { MdEventSeat } from "react-icons/md";
 import { FaBuilding } from "react-icons/fa";
 import { PiMicrophoneStageFill } from "react-icons/pi";
@@ -9,7 +18,31 @@ import { LuProjector } from "react-icons/lu";
 
 export default function VenueDetails() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [scrollBehavior, setScrollBehavior] = React.useState("inside");
+    const [scrollBehavior, setScrollBehavior] = useState("inside");
+
+    // EVENT CALENDAR
+    const DnDCalendar = withDragAndDrop(Calendar)
+    const localizer = dayjsLocalizer(dayjs)
+    const [events, setEvents] = useState([
+        {
+            id: 1,
+            title: "WAD project discussion",
+            start: new Date(2024, 10, 30, 19, 15, 0, 0),
+            end: new Date(2024, 10, 30, 21, 0, 0, 0),
+        }
+    ])
+    const handleEventPropChange = useCallback(({ event, start, end }) => {
+        setEvents((prevEvents) => {
+            let updatedEvents = prevEvents.map((ev) => {
+                if (ev.id == event.id) {
+                    return { ...ev, start, end }
+                }
+                return ev;
+            })
+            return updatedEvents
+        })
+    }, [events])
+
     return (
         <div className='mx-16 my-8'>
             <h1 className="text-primary text-3xl font-bold py-5 flex justify-center lg:justify-start">Auditorium</h1>
@@ -50,10 +83,25 @@ export default function VenueDetails() {
                     <p className='text-black text-lg font-bold mt-2'>Projector</p>
                     <p id='projector'>Available</p></div>
             </div>
-            <div className='bg-primary w-64 lg:w-96 h-64 my-9 mx-auto rounded flex justify-center items-center text-white'>Event calendar</div>
-            <div >
+            <div className="flex justify-end p-4">
                 <button className='bg-primary text-white border border-primary p-2 rounded'>REQUEST FOR BOOKING </button>
             </div>
+            {/* EVENT CALENDAR */}
+            <div style={{ marginBottom: "500px", padding: "0 40px" }}>
+                <h1 style={{ fontWeight: "bold", fontSize: "40px", padding: "10px" }}>Event Calendar</h1>
+                <DnDCalendar
+                    localizer={localizer}
+                    events={events}
+                    startAccessor={"start"}
+                    endAccessor={"end"}
+                    draggableAccessor={(event) => true}
+                    style={{ height: "80vh" }}
+                    onEventResize={handleEventPropChange}
+                    onEventDrop={handleEventPropChange}
+                />
+            </div>
+
+
 
             <Modal className='fixed z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full mt-2.5 bg-black  border border-seconadary-outline' isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior={scrollBehavior} isDismissable={false} isKeyboardDismissDisabled={true}>
                 <ModalContent className='bg-white p-5 h-[80%] w-[70%] rounded text-center overflow-x-auto overflow-y-scroll'>
