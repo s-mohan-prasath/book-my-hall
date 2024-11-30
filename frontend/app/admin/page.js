@@ -19,7 +19,7 @@ export default function Admin() {
 
     const tabs = [
         { name: "Dashboard", content: events },
-        { name: "Client Details", content: 'Client details will appear here' },
+        { name: "Accepted Bookings", content: 'Accepted Bookings will appear here' },
     ];
 
     const handleConfirm = (index) => {
