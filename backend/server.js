@@ -22,7 +22,7 @@ privateRouteConfig(passport)
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({
-    extended:true,
+    extended: true,
 }))
 app.use(session({ secret: process.env.APP_SECRET }))
 app.use(passport.initialize())
@@ -34,6 +34,7 @@ app.get("/", (req, res) => {
         message: "coming"
     })
 })
+
 app.use("/auth", Auth)
 app.use("/admin/auth", AdminAuth)
 app.use("/get-image", Image)
