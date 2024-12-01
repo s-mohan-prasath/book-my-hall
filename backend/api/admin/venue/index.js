@@ -42,7 +42,6 @@ Router.patch('/:_id', passport.authenticate("jwt", { session: false }), async (r
     const { _id } = req.params
     const venueData = req.body;
     await ValidateUpdateVenue(venueData)
-    console.log(venueData)
     const venue = await VenueModel.updateOne({ _id: _id }, { ...venueData })
     return res.json({
       status: 'success',

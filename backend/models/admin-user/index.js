@@ -5,7 +5,6 @@ import { config } from "dotenv";
 
 config();
 
-
 const ROLE_TYPES = {
     ROOT: "root",         // Full access, including admin management
     MANAGER: "manager",   // Manage users, bookings, and other major data
@@ -68,7 +67,7 @@ AdminUserSchema.statics.findByEmailAndPassword = async ({ email, password }) => 
 
 // Helper Method to Update Role
 AdminUserSchema.methods.updateRole = async function (newRole) {
-    if (!["root", "manager", "view-only"].includes(newRole)) {
+    if (!Object.values(ROLE_TYPES).includes(newRole)) {
         throw new Error(`Invalid role: ${newRole}`);
     }
 

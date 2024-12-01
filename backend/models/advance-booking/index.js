@@ -7,10 +7,6 @@ const AdvanceBookingSchema = new mongoose.Schema(
             ref: "bookings",
             required: true,
         },
-        booking_date: {
-            type: Date,
-            default: () => Date.now(),
-        },
         request_note: {
             type: String,
             required: true
