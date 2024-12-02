@@ -1,6 +1,8 @@
 import express from "express";
 import passport from 'passport'
 import { BookingModel } from "../../models/allModels.js";
+import { ValidateNewBooking } from "../../validate/booking.validate.js";
+import { isBookingAvailable } from './../../utils/db.js'
 
 const Router = express.Router();
 
@@ -11,7 +13,23 @@ const Router = express.Router();
  * Access    Private
  * Method    GET
  */
-Router.get("/booking", passport.authenticate("jwt", { session: false }), async (req, res) => {
+//TODO:work on the create new booking appi
+Router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        let user_id = req.user?.user_id
+        let bookingData = req.body;
+        await ValidateNewBooking(bookingData)
+        if (isBookingAvailable((bookingData?.venue, bookingData?.event_start, bookingData?.event_end))==false){
+            throw new Error("Booking slot unavailable in the given start and end time of the event")
+        }
+        bookingData.user = user_id;
+        let booking = await BookingModel.create(bookingData)
+        res.json({ message: "Booking created successfully...", booking })
+    } catch (e) {
+        return res.status(400).json({ status: "failed", error: e.message })
+    }
+})
+Router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
         let bookings = await BookingModel.find().populate("venue").populate("user")
         return res.json({ message: "bookings retrieved successfully", "bookings": bookings })

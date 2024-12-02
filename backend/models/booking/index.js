@@ -17,19 +17,16 @@ const BookingSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
-        event_start_date: {
+        event_desc: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        event_start: {
             type: Date,
             required: true,
         },
-        event_end_date: {
-            type: Date,
-            required: true,
-        },
-        event_start_time: {
-            type: Date,
-            required: true,
-        },
-        event_end_time: {
+        event_end: {
             type: Date,
             required: true,
             validate: {
