@@ -7,10 +7,13 @@ import { FaBuilding } from "react-icons/fa";
 import { PiMicrophoneStageFill } from "react-icons/pi";
 import { MdOutlineSevereCold } from "react-icons/md";
 import { LuProjector } from "react-icons/lu";
+import BookingForm from "./bookingForm";
 
 export default function VenueDetails() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [scrollBehavior, setScrollBehavior] = React.useState("inside");
+
+    const { isOpen: isRequestModalOpen, onOpen: onOpenRequestModal, onOpenChange: onOpenRequestModalChange } = useDisclosure();
     return (
         <div className='mx-16 my-8'>
             <h1 className="text-primary text-3xl font-bold py-5 flex justify-center lg:justify-start">Auditorium</h1>
@@ -51,7 +54,7 @@ export default function VenueDetails() {
                     <p className='text-black text-lg font-bold mt-2'>Projector</p>
                     <p id='projector'>Available</p></div>
             </div>
-            <div className="flex flex-row justify-end m-8 "><button className='bg-primary text-white border border-primary p-2 rounded'>REQUEST FOR BOOKING </button></div>
+            <div className="flex flex-row justify-end m-8 "><button className='bg-primary text-white border border-primary p-2 rounded' onClick={onOpenRequestModal}>REQUEST FOR BOOKING </button></div>
             <div className='bg-primary w-64 lg:w-96 h-64 my-9 mx-auto rounded flex justify-center items-center text-white'>Event calendar</div>
 
             <Modal className='fixed z-10 md:top-72 max-xl top-1/2 left-[48%] transform -translate-x-1/2 -translate-y-1/2 w-full mx-auto mt-2.5 bg-black  border border-seconadary-outline' isOpen={isOpen} onOpenChange={onOpenChange} scrollBehavior={scrollBehavior} isDismissable={false} isKeyboardDismissDisabled={true}>
@@ -77,6 +80,12 @@ export default function VenueDetails() {
                 </ModalContent>
             </Modal>
 
+            <BookingForm
+                isOpen={isRequestModalOpen}
+                onOpenChange={onOpenRequestModalChange}
+                scrollBehavior={scrollBehavior}
+                onCloseRequestModal={onOpenRequestModalChange}
+            />
 
         </div>
 

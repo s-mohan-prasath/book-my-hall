@@ -14,11 +14,11 @@ export default function Home() {
                     style={{ maxWidth: '100%', maxHeight: '80.2vh' }}
                 />
                 <div className="hero">&quot; Lets Make Your Next Event <span className="hero-span">Extraordinary!</span> &quot;</div>
-                {/* <div className="hero">"Seamless Venue Booking for <span className="hero-span">Unforgettable Events!</span> "</div> */}
+
             </div>
             <div className="features-container">
                 <h2 className="features-title">Our Key Features</h2>
-                <p>Explore the key features that make our service stand out. From advance bookings to hassle-free venue management and a comprehensive event calendar, we&apos;ve got you covered.</p>
+                <p>Explore the key features that make our service stand out. From advance bookings to hassle-free venue management and a comprehensive event calendar, we&aposve got you covered.</p>
                 <div className="features">
                     <div className="feature-card">
                         <Image src="/images/booking.jpeg" alt="Feature 1" className="feature-image" width={300} height={200} />
