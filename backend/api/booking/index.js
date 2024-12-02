@@ -1,25 +1,34 @@
 import express from "express";
 import passport from 'passport'
 import { BookingModel } from "../../models/allModels.js";
-import { ValidateNewBooking } from "../../validate/booking.validate.js";
+import { ValidateNewBooking, ValidateUpdateBooking } from "../../validate/booking.validate.js";
 import { isBookingAvailable } from './../../utils/db.js'
 
 const Router = express.Router();
 
 /**
  * Route    /booking
- * Des       get list of bookings
+ * Des       get list of bookings of the user
  * Params    none
  * Access    Private
  * Method    GET
  */
-//TODO:work on the create new booking appi
+Router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        let bookings = await BookingModel.findById(req.user?.user_id).populate("venue")
+        return res.json({ message: "bookings retrieved successfully", "bookings": bookings })
+    } catch (error) {
+        return res.status(404).json({ status: "failed", error: error.message });
+    }
+});
+
 Router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
         let user_id = req.user?.user_id
         let bookingData = req.body;
         await ValidateNewBooking(bookingData)
-        if (isBookingAvailable((bookingData?.venue, bookingData?.event_start, bookingData?.event_end))==false){
+        let availBookingsArrLen = await isBookingAvailable(bookingData?.venue, new Date(bookingData?.event_start), new Date(bookingData?.event_end));
+        if (availBookingsArrLen != 0) {
             throw new Error("Booking slot unavailable in the given start and end time of the event")
         }
         bookingData.user = user_id;
@@ -29,13 +38,13 @@ Router.post("/", passport.authenticate("jwt", { session: false }), async (req, r
         return res.status(400).json({ status: "failed", error: e.message })
     }
 })
-Router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
+// TODO: work on the route
+Router.patch("/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
-        let bookings = await BookingModel.find().populate("venue").populate("user")
-        return res.json({ message: "bookings retrieved successfully", "bookings": bookings })
-    } catch (error) {
-        return res.status(404).json({ status: "failed", error: error.message });
+
+    } catch (e) {
+        return res.status(400).json({ status: "failed", error: e.message })
     }
-});
+})
 
 export default Router;
