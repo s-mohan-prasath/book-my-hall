@@ -38,18 +38,19 @@ export default function BookingForm({ isOpen, onOpenChange, scrollBehavior, onCl
                                     <input className=' border-2 [border-color:#222222] p-3 w-full h-9 rounded bg-transparent text-seconadary focus:outline-none  text-s[15px] placeholder-black ' type="text" id="etime" name="etime" required />
                                     <div className="text-center h-5 text-xl"></div>
                                 </div>
+                                <div className="flex justify-center">
+                                    <Button className='bg-primary border border-primary rounded mx-1 text-white py-1  mt-2' onPress={onCloseRequestModal}>
+                                        Cancel
+                                    </Button>
+                                    <Button className='bg-primary border border-primary rounded mx-1 text-white py-1  mt-2' >
+                                        Submit Request
+                                    </Button>
+                                </div>
 
 
                             </form >
                         </ModalBody>
-                        <ModalFooter className="flex justify-center">
-                            <Button className='bg-primary border border-primary rounded mx-1 text-white py-1  mt-2' onPress={onCloseRequestModal}>
-                                Cancel
-                            </Button>
-                            <Button className='bg-primary border border-primary rounded mx-1 text-white py-1  mt-2' >
-                                Submit Request
-                            </Button>
-                        </ModalFooter>
+
                     </>
                 )}
             </ModalContent>

@@ -18,7 +18,8 @@ export default function Admin() {
     const [events, setEvents] = useState(eventsData);
 
     const tabs = [
-        { name: "Dashboard", content: events },
+        { name: "Daashboard", content: },
+        { name: "Bookings", content: events },
         { name: "Accepted Bookings", content: 'Accepted Bookings will appear here' },
     ];
 
