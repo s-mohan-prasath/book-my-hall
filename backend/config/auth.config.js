@@ -1,6 +1,6 @@
 import JwtPassport from "passport-jwt";
 import { config } from "dotenv";
-import { UserModel } from "../models/allModels.js"
+import { AdminUserModel, UserModel } from "../models/allModels.js"
 
 config()
 const JWtStrategy = JwtPassport.Strategy;
@@ -36,6 +36,8 @@ export default (passport) => {
                 } catch (error) {
                     throw new Error(error);
                 }
+            } else {
+                throw new Error("Invalid jwt token")
             }
         })
     )

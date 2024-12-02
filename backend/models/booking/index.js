@@ -2,26 +2,26 @@ import mongoose from "mongoose";
 
 const BookingSchema = new mongoose.Schema(
     {
-        user_id: {
+        user: {
             type: mongoose.Types.ObjectId,
             ref: "users",
             required: true,
         },
-        venue_id: {
+        venue: {
             type: mongoose.Types.ObjectId,
             ref: "venues",
             required: true,
-        },
-        booking_date: {
-            type: Date,
-            default: () => Date.now(),
         },
         event_name: {
             type: String,
             required: true,
             trim: true,
         },
-        event_date: {
+        event_start_date: {
+            type: Date,
+            required: true,
+        },
+        event_end_date: {
             type: Date,
             required: true,
         },
@@ -39,10 +39,13 @@ const BookingSchema = new mongoose.Schema(
                 message: "Event end time must be after the start time.",
             },
         },
+        event_image: {
+            type: String
+        },
         status: {
             type: String,
-            enum: ["approved", "upcoming", "denied", "cancelled"],
-            default: "upcoming",
+            enum: ["pending", "cancelled", "upcoming", "completed"],
+            default: "pending",
         },
     },
     {

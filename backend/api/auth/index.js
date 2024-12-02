@@ -12,7 +12,6 @@ const Router = express.Router();
  * Access    Public
  * Method    POST
  */
-//TODO: WORK ON THE AUTH APIs
 Router.post("/signup", async (req, res) => {
     let credentials = req.body;
     try {
@@ -22,7 +21,7 @@ Router.post("/signup", async (req, res) => {
         if (user) throw new Error("User Already Exists");
         const newUser = await UserModel.create({ email, password, name, phoneNumber });
         const token = newUser.generateJwtToken();
-        return res.status(200).json({ token, status: "success" });
+        return res.status(200).json({ status: "success",token });
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }
@@ -41,11 +40,10 @@ Router.post("/signin", async (req, res) => {
     try {
         await ValidateSignIn(credentials);
         const user = await UserModel.findByEmailAndPassword(credentials);
-        console.log(user)
         const token = await user.generateJwtToken();
-        res.status(200).json({ token, status: "success" });
+        res.status(200).json({ status: "success",token });
     } catch (error) {
-        return res.status(400).json({ error: error.message });
+        return res.status(400).json({ error: error.message, });
     }
 });
 

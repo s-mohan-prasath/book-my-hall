@@ -9,6 +9,9 @@ import passport from 'passport'
 import { UserModel, VenueModel, ImageModel, BookingModel, AdvanceBookingModel } from './models/allModels.js'
 import privateRouteConfig from './config/auth.config.js'
 import Auth from './api/auth/index.js'
+import Image from './api/image/index.js'
+import Venue from './api/venue/index.js'
+import AdminVenue from './api/admin/venue/index.js'
 import AdminAuth from './api/admin/auth/index.js'
 
 dotenv.config()
@@ -18,6 +21,9 @@ privateRouteConfig(passport)
 
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({
+    extended: true,
+}))
 app.use(session({ secret: process.env.APP_SECRET }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -28,8 +34,12 @@ app.get("/", (req, res) => {
         message: "coming"
     })
 })
+
 app.use("/auth", Auth)
 app.use("/admin/auth", AdminAuth)
+app.use("/get-image", Image)
+app.use("/venue", Venue)
+app.use("/admin/venue", AdminVenue)
 
 let PORT = 5000
 app.listen(PORT, () => {

@@ -1,21 +1,22 @@
 import express from "express";
+import passport from 'passport'
 import { BookingModel } from "../../models/allModels.js";
 
 const Router = express.Router();
 
 /**
- * Route    /signup
- * Des       create new authorised user
+ * Route    /booking
+ * Des       get list of bookings
  * Params    none
- * Access    Public
- * Method    POST
+ * Access    Private
+ * Method    GET
  */
-//TODO: WORK ON THE AUTH APIs
-Router.post("/booking", async (req, res) => {
+Router.get("/booking", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
-
+        let bookings = await BookingModel.find().populate("venue").populate("user")
+        return res.json({ message: "bookings retrieved successfully", "bookings": bookings })
     } catch (error) {
-        return res.status(404).json({ error: error.message });
+        return res.status(404).json({ status: "failed", error: error.message });
     }
 });
 
