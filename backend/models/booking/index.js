@@ -17,36 +17,49 @@ const BookingSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
-        event_start_date: {
+        event_desc: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        event_start: {
             type: Date,
             required: true,
         },
-        event_end_date: {
-            type: Date,
-            required: true,
-        },
-        event_start_time: {
-            type: Date,
-            required: true,
-        },
-        event_end_time: {
+        event_end: {
             type: Date,
             required: true,
             validate: {
                 validator: function (value) {
-                    return value > this.event_start_time;
+                    return value > this.event_start;
                 },
                 message: "Event end time must be after the start time.",
             },
         },
-        event_image: {
-            type: String
+        people_count: {
+            type: Number,
+            required: true,
+            min: 1,
+            max: 10000
         },
         status: {
             type: String,
-            enum: ["pending", "cancelled", "upcoming", "completed"],
+            enum: ["pending", "accepted", "denied", "cancelled"],
             default: "pending",
         },
+        event_image: {
+            type: String
+        },
+        requested_update: {
+            type: mongoose.Schema.Types.Mixed,
+            default: null
+        },
+        request_note: {
+            type: String
+        },
+        admin_reply_note: {
+            type: String
+        }
     },
     {
         timestamps: true,
