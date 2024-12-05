@@ -1,16 +1,17 @@
 "use client";
 import Link from 'next/link';
 import '../../styles/signup.login.css';
+import { useRouter } from 'next/navigation';
 
 export default function SignIn() {
-
+    const router = useRouter();
     async function makeAdminLogIn(e) {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
         try {
-            await fetch('http://localhost:5000/admin/auth/signin', {
+            let response = await fetch('http://localhost:5000/admin/auth/signin', {
                 method: "POST",
                 body: JSON.stringify({
                     email, password
@@ -18,11 +19,15 @@ export default function SignIn() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-            }).then((res) => {
-                return res.json()
-            }).then(data => {
-                console.log(data)
-            })
+            });
+            if (response.ok) {
+                router.push('/admin')
+            }
+            else {
+                document.getElementById('error').innerText = "Invalid Admin Credential";
+                document.getElementById('error').style.marginBottom = "12px";
+            }
+
         } catch (error) {
             console.log(error.message)
         }
@@ -40,7 +45,7 @@ export default function SignIn() {
             <div className="flex flex-col gap-5 relative custom">
                 <input className='border-0 border-b-2 [border-color:#222222] w-full h-9 bg-transparent text-seconadary focus:outline-none text-s[15px] ' type="password" id="password" name="password" placeholder="" />
                 <label className='absolute left-0 top-0 transition-all duration-300 ' htmlFor="password">Password</label>
-                <div className="text-center h-5 text-xl"></div>
+                <div className="text-center h-5 text-base text-primary" id='error'></div>
             </div>
             <div className="flex justify-between items-center text-seconadary " >
                 <label className='flex items-center' htmlFor="remember">

@@ -35,6 +35,14 @@ export default function SignIn() {
                 document.getElementById('error').textContent = "User Already Exists";
                 document.getElementById('error').style.marginBottom = "12px";
             }
+            if (data.error) {
+                document.getElementById('error').textContent = "Please enter valid details ";
+                document.getElementById('error').style.marginBottom = "12px";
+            }
+            if (!data.error) {
+                document.cookie = data.token;
+            }
+            console.log(data);
         } catch (error) {
             console.log(error.message)
         }
