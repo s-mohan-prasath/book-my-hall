@@ -1,27 +1,31 @@
 'use client';
+import axios from "axios";
 import { useState } from "react";
 import "../styles/venueList.css";
+
+const apiUrl = "http://localhost:3000/venue";
 
 export default function Home() {
   const [venues, setVenues] = useState([]); // Store venue data
   const [filters, setFilters] = useState({ block: "", availability: "", capacity: "" });
 
-  const fetchVenues = () => {
-    // Mock venue data
-    const data = [
-      { id: 1, block: "A", availability: "Available", capacity: 50 },
-      { id: 2, block: "B", availability: "Unavailable", capacity: 100 },
-      { id: 3, block: "C", availability: "Available", capacity: 150 },
-    ];
-
-    // Apply filters
-    const filteredData = data.filter(
-      (venue) =>
-        (!filters.block || venue.block === filters.block) &&
-        (!filters.availability || venue.availability === filters.availability) &&
-        (!filters.capacity || venue.capacity >= Number(filters.capacity))
-    );
-    setVenues(filteredData);
+  const fetchVenues = async() => {
+    try{
+      const token= localStorage.setItem('token');//need to check n update jwt token
+      const response= await axios.get(apiUrl,{
+        headers:{
+          Authorization: `Bearer ${token}`
+        },
+        params:{
+          block:filters.block,
+          availability:filters.availability,
+          capacity:filters.capacity
+        }
+      });
+      setVenues(response.data.venues);
+    } catch (error) {
+      console.error('Error fetching venues:', error);
+    }
   };
 
   const handleFilterChange = (e) => {
