@@ -14,6 +14,12 @@ export default function Navbar() {
             menubar.current.classList.add("hidden");
         }
     };
+    const handleLogout = () => {
+        // Clear cookies
+        document.cookie = "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        sessionStorage.clear()
+        window.location.reload()
+    };
     useEffect(() => {
         let user = JSON.parse(sessionStorage.getItem("user"))
         console.log(user)
@@ -50,16 +56,11 @@ export default function Navbar() {
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Profile Actions" variant="flat">
                                 <DropdownItem key="profile" className="h-14 gap-2">
+                                    <p><strong>Name : </strong>{user.name}</p>
                                     <p className="font-semibold">Signed in as</p>
-                                    <p className="font-semibold">zoey@example.com</p>
+                                    <p className="font-semibold">{user.email}</p>
                                 </DropdownItem>
-                                <DropdownItem key="settings">My Settings</DropdownItem>
-                                <DropdownItem key="team_settings">Team Settings</DropdownItem>
-                                <DropdownItem key="analytics">Analytics</DropdownItem>
-                                <DropdownItem key="system">System</DropdownItem>
-                                <DropdownItem key="configurations">Configurations</DropdownItem>
-                                <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
-                                <DropdownItem key="logout" color="danger">
+                                <DropdownItem key="logout" color="danger" onClick={handleLogout}>
                                     Log Out
                                 </DropdownItem>
                             </DropdownMenu>

@@ -26,7 +26,7 @@ export default function LogIn() {
                 let token = data.token;
                 document.cookie = `auth_token=${token}; path=/; max-age=${60 * 60}`;
                 sessionStorage.setItem("user", JSON.stringify(data?.user))
-                router.push('/venueList')
+                window.location.href = "/venueList"
             }
             else {
                 document.getElementById('error').innerText = "Invalid User Credential";
