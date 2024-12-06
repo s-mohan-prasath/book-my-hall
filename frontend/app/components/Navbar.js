@@ -1,9 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/dropdown";
+import { Avatar } from "@nextui-org/avatar";
 
 export default function Navbar() {
-
+    const [user, setUser] = useState({})
     const menubar = useRef(null);
     const menu = () => {
         if (menubar.current.classList.contains("hidden")) {
@@ -12,6 +14,11 @@ export default function Navbar() {
             menubar.current.classList.add("hidden");
         }
     };
+    useEffect(() => {
+        let user = JSON.parse(sessionStorage.getItem("user"))
+        console.log(user)
+        setUser(user)
+    }, [])
 
     return (
         <>
@@ -24,11 +31,39 @@ export default function Navbar() {
                         </svg>
 
                     </button>
-                    <ul className=" hidden md:flex flex-wrap gap-7  my-auto">
+                    {user?.name == undefined ? <ul className=" hidden md:flex flex-wrap gap-7  my-auto">
                         <li><Link href="/" className="bg-primary px-4 py-1.5 rounded hover:bg-black border border-primary border-2">Home</Link></li>
                         <li><Link href="/signup" className="bg-primary px-4 py-1.5 rounded hover:bg-black border border-primary border-2">SignUp</Link> </li>
                         <li><Link href="/login" className="bg-primary px-4 py-1.5 rounded hover:bg-black border border-primary border-2">LogIn</Link></li>
-                    </ul>
+                    </ul> :
+                        <Dropdown placement="bottom-end">
+                            <DropdownTrigger>
+                                <Avatar
+                                    isBordered
+                                    as="button"
+                                    className="transition-transform"
+                                    color="secondary"
+                                    name="Jason Hughes"
+                                    size="sm"
+                                    src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                                />
+                            </DropdownTrigger>
+                            <DropdownMenu aria-label="Profile Actions" variant="flat">
+                                <DropdownItem key="profile" className="h-14 gap-2">
+                                    <p className="font-semibold">Signed in as</p>
+                                    <p className="font-semibold">zoey@example.com</p>
+                                </DropdownItem>
+                                <DropdownItem key="settings">My Settings</DropdownItem>
+                                <DropdownItem key="team_settings">Team Settings</DropdownItem>
+                                <DropdownItem key="analytics">Analytics</DropdownItem>
+                                <DropdownItem key="system">System</DropdownItem>
+                                <DropdownItem key="configurations">Configurations</DropdownItem>
+                                <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
+                                <DropdownItem key="logout" color="danger">
+                                    Log Out
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>}
                 </div>
                 <div className="hidden " ref={menubar}>
                     <ul className="md:hidden  fixed top-0 right-0 h-[100vh]  w-64 z-[999] bg-seconadary-light  backdrop-blur-[10px] transition-right duration-500 ease-linear shadow-sm flex flex-col items-start justify-start ">

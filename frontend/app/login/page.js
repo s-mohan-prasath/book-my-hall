@@ -22,6 +22,10 @@ export default function LogIn() {
             });
 
             if (response.ok) {
+                let data = await response.json();
+                let token = data.token;
+                document.cookie = `auth_token=${token}; path=/; max-age=${60 * 60}`;
+                sessionStorage.setItem("user", JSON.stringify(data?.user))
                 router.push('/venueList')
             }
             else {
