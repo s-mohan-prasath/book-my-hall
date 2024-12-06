@@ -32,7 +32,7 @@ export default function SignIn() {
                 let token = data.token;
                 document.cookie = `auth_token=${token}; path=/; max-age=${60 * 60}`;
                 sessionStorage.setItem("user", JSON.stringify(data?.user))
-                router.push('/venueList')
+                window.location.href = "/venueList"
             }
             const data = await response.json();
             if (data.error == "User Already Exists") {
