@@ -5,11 +5,11 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
     if (!isOpen) return null;
 
     const [venueName, setVenueName] = useState('');
+    const [venueType, setVenueType] = useState('');
     const [seatingCapacity, setSeatingCapacity] = useState('');
     const [blockName, setBlockName] = useState('');
-    const [podium, setPodium] = useState('yes');
-    const [projector, setProjector] = useState('yes');
-    const [ac, setAc] = useState('yes');
+    const [projector, setProjector] = useState(true);
+    const [ac, setAc] = useState(true);
     const [images, setImages] = useState([]);
     const [errors, setErrors] = useState({});
 
@@ -44,11 +44,11 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
             // Prepare venue data as JSON string
             const venueData = JSON.stringify({
                 name: venueName,
-                type: "hall",
+                type: venueType,
                 seating_capacity: parseInt(seatingCapacity),
                 address: blockName,
-                has_projector: true, // Fixed typo: changed 'has_project' to 'has_projector'
-                has_ac: true
+                has_projector: projector, // Fixed typo: changed 'has_project' to 'has_projector'
+                has_ac: ac
             });
 
             // Append venue data and images
@@ -110,14 +110,14 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
                     <div>
                         <label className="block text-sm font-medium mb-1">Venue Type</label>
                         <select
-                            value={podium}
-                            onChange={(e) => setPodium(e.target.value)}
+                            value={venueType}
+                            onChange={(e) => setVenueType(e.target.value)}
                             className="w-full border rounded-md p-2"
                         >
                             <option value="hall">Hall</option>
                             <option value="lab">Lab</option>
                             <option value="classroom">Classroom</option>
-                            <option value="classroom">Classroom</option>
+                            <option value="auditorium">Auditorium</option>
                         </select>
                     </div>
                     <div>
@@ -132,7 +132,7 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
                         {errors.seatingCapacity && <p className="text-red-500 text-sm">{errors.seatingCapacity}</p>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium mb-1">Block Name</label>
+                        <label className="block text-sm font-medium mb-1">Address</label>
                         <input
                             type="text"
                             value={blockName}
@@ -143,25 +143,14 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
                         {errors.blockName && <p className="text-red-500 text-sm">{errors.blockName}</p>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium mb-1">Podium Availability</label>
-                        <select
-                            value={podium}
-                            onChange={(e) => setPodium(e.target.value)}
-                            className="w-full border rounded-md p-2"
-                        >
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                    <div>
                         <label className="block text-sm font-medium mb-1">Projector Availability</label>
                         <select
                             value={projector}
                             onChange={(e) => setProjector(e.target.value)}
                             className="w-full border rounded-md p-2"
                         >
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
                         </select>
                     </div>
                     <div>
@@ -171,8 +160,8 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
                             onChange={(e) => setAc(e.target.value)}
                             className="w-full border rounded-md p-2"
                         >
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
                         </select>
                     </div>
                     <div>
