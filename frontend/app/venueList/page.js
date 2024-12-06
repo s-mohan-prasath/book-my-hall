@@ -11,7 +11,7 @@ export default function Home() {
 
     const fetchVenues = async () => {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkI…yMjR9.cWoUDzlTWX7HTaO70AfACfbP-oxVqhxuGJikfgoqGCk';//need to check n update jwt token
+            const token = '';//need to check n update jwt token
             const response = await axios.get(apiUrl, {
                 headers: {
                     Authorization: `Bearer ${token}`

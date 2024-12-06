@@ -47,8 +47,8 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
                 type: "hall",
                 seating_capacity: parseInt(seatingCapacity),
                 address: blockName,
-                has_projector: projector, // Fixed typo: changed 'has_project' to 'has_projector'
-                has_ac: ac
+                has_projector: true, // Fixed typo: changed 'has_project' to 'has_projector'
+                has_ac: true
             });
 
             // Append venue data and images
@@ -58,7 +58,7 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
             });
 
             // Set up headers with the Authorization token
-            const token = "<token>"; // Replace with your actual token
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6IjY3NTJjOTdmYzkzMzI2OGNmOTY3NTZmNSIsInR5cGUiOiJ2aWV3LW9ubHkiLCJpYXQiOjE3MzM0Nzg4NDUsImV4cCI6MTczMzU2NTI0NX0.yrrutkNN5xop4pvVMQQr7RMP9rCYoiUYN_iQsJTexrA"; // Replace with your actual token
             const requestOptions = {
                 method: 'POST',
                 body: formData,
@@ -106,6 +106,19 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
                             placeholder="Enter venue name"
                         />
                         {errors.venueName && <p className="text-red-500 text-sm">{errors.venueName}</p>}
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Venue Type</label>
+                        <select
+                            value={podium}
+                            onChange={(e) => setPodium(e.target.value)}
+                            className="w-full border rounded-md p-2"
+                        >
+                            <option value="hall">Hall</option>
+                            <option value="lab">Lab</option>
+                            <option value="classroom">Classroom</option>
+                            <option value="classroom">Classroom</option>
+                        </select>
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">Seating Capacity</label>
