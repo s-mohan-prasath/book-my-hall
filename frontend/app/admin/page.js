@@ -3,16 +3,22 @@ import React, { useState, useMemo } from "react";
 import AddVenueModal from './addVenues.js';
 
 
+
+
 export default function Admin() {
     const [activeTab, setActiveTab] = useState(0);
     const [searchTerm, setSearchTerm] = useState("");
     const [filterStatus, setFilterStatus] = useState("pending");
 
+
     const [isModalOpen, setIsModalOpen] = useState(false);
+
 
     const handleAddVenueSubmit = (formData) => {
         console.log('Submitted Venue Data:', formData);
     };
+
+
 
 
     const eventsData = [
@@ -26,13 +32,16 @@ export default function Admin() {
         { name: "Sophia Wilson", hall: "Rooftop Terrace", email: "sophia@example.com", eventName: "Sunset Party", phoneNumber: "012-345-6789" }
     ];
 
+
     const usersData = [
         { name: "John Doe", email: "john.doe@example.com", phoneNumber: "123-456-7890" },
         { name: "Jane Doe", email: "jane.doe@example.com", phoneNumber: "098-765-4321" },
         { name: "Michael Brown", email: "michael.brown@example.com", phoneNumber: "456-789-0123" },
     ];
 
+
     const [events, setEvents] = useState(eventsData.map(event => ({ ...event, status: null })));
+
 
     // Filtered and Searched Events
     const filteredEvents = useMemo(() => {
@@ -43,6 +52,7 @@ export default function Admin() {
                 event.hall.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 event.email.toLowerCase().includes(searchTerm.toLowerCase());
 
+
             const matchesStatus =
                 filterStatus === "all"
                     ? true
@@ -52,9 +62,11 @@ export default function Admin() {
                         (filterStatus === "declined" && event.status === "declined")
                     );
 
+
             return matchesSearch && matchesStatus;
         });
     }, [events, searchTerm, filterStatus]);
+
 
     // Filtered and Searched Users
     const filteredUsers = useMemo(() => {
@@ -65,6 +77,7 @@ export default function Admin() {
         );
     }, [searchTerm]);
 
+
     const tabs = [
         { name: "Dashboard", content: renderDashboard() },
         { name: "Bookings", content: filteredEvents },
@@ -73,11 +86,13 @@ export default function Admin() {
         { name: "Venues", content: null },
     ];
 
+
     function renderDashboard() {
         const totalEvents = events.length;
         const confirmedEvents = events.filter(event => event.status === "confirmed").length;
         const pendingEvents = events.filter(event => !event.status).length;
         const declinedEvents = events.filter(event => event.status === "declined").length;
+
 
         return (
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6">
@@ -101,6 +116,7 @@ export default function Admin() {
         );
     }
 
+
     const handleConfirm = (index) => {
         const updatedEvents = [...events];
         const eventToConfirm = filteredEvents[index];
@@ -109,6 +125,7 @@ export default function Admin() {
         setEvents(updatedEvents);
     };
 
+
     const handleDecline = (index) => {
         const updatedEvents = [...events];
         const eventToDecline = filteredEvents[index];
@@ -116,6 +133,7 @@ export default function Admin() {
         updatedEvents[originalIndex].status = "declined";
         setEvents(updatedEvents);
     };
+
 
     const renderSearchAndFilter = () => (
         <div className="flex flex-col md:flex-row justify-between items-center mb-6 px-10">
@@ -141,6 +159,7 @@ export default function Admin() {
         </div>
     );
 
+
     return (
         <div className="m-0 p-0 w-full">
             <div className="bg-black p-5 flex gap-10 justify-center">
@@ -160,9 +179,11 @@ export default function Admin() {
                 ))}
             </div>
 
+
             <div className="mt-10 p-5 md:w-full mx-auto rounded">
                 {/* Add search functionality for Bookings and Users */}
                 {(activeTab === 1 || activeTab === 3) && renderSearchAndFilter()}
+
 
                 {activeTab === 0 ? (
                     <h2 className="text-center text-2xl text-primary">{tabs[activeTab].content}</h2>
@@ -179,9 +200,10 @@ export default function Admin() {
                                 <p><strong>Email :</strong> {event.email}</p>
                             </div>
 
+
                             <div className="mt-5 flex sm:flex-col sm:my-auto gap-4">
                                 {event.status === "confirmed" || event.status === "declined" ? (
-                                    <p className={`text-gray-500 font-semibold 
+                                    <p className={`text-gray-500 font-semibold
                                         ${event.status === "confirmed" ? "text-green-600" : "text-red-600"}`}>
                                         {event.status === "confirmed" ? "Confirmed" : "Declined"}
                                     </p>
