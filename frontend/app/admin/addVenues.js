@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function AddVenueModal({ isOpen, onClose, onSubmit }) {
     if (!isOpen) return null;
@@ -29,25 +30,60 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
         return errors;
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         const validationErrors = validateForm();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
             return;
         }
 
-        const formData = {
-            venueName,
-            seatingCapacity,
-            blockName,
-            podium,
-            projector,
-            ac,
-            images
-        };
-        onSubmit(formData);
-        onClose(); // Close modal after submission
+        try {
+            // Create FormData to send multipart form data
+            const formData = new FormData();
+
+            // Prepare venue data as JSON string
+            const venueData = JSON.stringify({
+                name: venueName,
+                type: "hall",
+                seating_capacity: parseInt(seatingCapacity),
+                address: blockName,
+                has_projector: projector, // Fixed typo: changed 'has_project' to 'has_projector'
+                has_ac: ac
+            });
+
+            // Append venue data and images
+            formData.append('venueData', venueData); // venueData as JSON string
+            images.forEach((image) => {
+                formData.append('venue-images', image); // Append each image
+            });
+
+            // Set up headers with the Authorization token
+            const token = "<token>"; // Replace with your actual token
+            const requestOptions = {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    Authorization: `Bearer ${token}`, // Authorization header
+                },
+            };
+
+            // Make the POST request
+            const response = await fetch("http://localhost:5000/admin/venue/", requestOptions);
+            const result = await response.json();
+
+            if (response.ok) {
+                console.log(result);
+                onSubmit(result.data.venue); // Call the onSubmit callback with venue data
+                onClose(); // Close the modal or form
+            } else {
+                console.error("Error response:", result);
+            }
+        } catch (error) {
+            console.error("Error adding venue:", error.message);
+        }
     };
+
+
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">

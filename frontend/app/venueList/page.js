@@ -1,42 +1,32 @@
 'use client';
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useState } from "react";
 import "../styles/venueList.css";
+
+const apiUrl = "http://localhost:3000/venue";
 
 export default function Home() {
     const [venues, setVenues] = useState([]); // Store venue data
     const [filters, setFilters] = useState({ block: "", availability: "", capacity: "" });
 
-    const venuesData = [
-        { id: 1, name: "Auditorium 1", block: "A", availability: "Available", capacity: 50 },
-        { id: 2, name: "Auditorium 2", block: "B", availability: "Unavailable", capacity: 100 },
-        { id: 3, name: "Auditorium 3", block: "C", availability: "Available", capacity: 150 },
-        { id: 4, name: "Auditorium 4", block: "A", availability: "Available", capacity: 200 },
-        { id: 5, name: "Auditorium 5", block: "B", availability: "Unavailable", capacity: 75 },
-        { id: 6, name: "Auditorium 6", block: "C", availability: "Available", capacity: 120 },
-        // Add more venues if needed
-    ];
-
-    const router = useRouter();
-    const handleDetailsClick = (venue) => {
-        // Navigate to the venue details page with the venue ID
-        router.push('/venueDetails');
+    const fetchVenues = async () => {
+        try {
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkI…yMjR9.cWoUDzlTWX7HTaO70AfACfbP-oxVqhxuGJikfgoqGCk';//need to check n update jwt token
+            const response = await axios.get(apiUrl, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                params: {
+                    block: filters.block,
+                    availability: filters.availability,
+                    capacity: filters.capacity
+                }
+            });
+            setVenues(response.data.venues);
+        } catch (error) {
+            console.error('Error fetching venues:', error);
+        }
     };
-
-    const fetchVenues = () => {
-        // Apply filters to the data
-        const filteredData = venuesData.filter(
-            (venue) =>
-                (!filters.block || venue.block === filters.block) &&
-                (!filters.availability || venue.availability === filters.availability) &&
-                (!filters.capacity || venue.capacity >= Number(filters.capacity))
-        );
-        setVenues(filteredData);
-    };
-
-    useEffect(() => {
-        fetchVenues(); // Fetch venues when the component mounts
-    }, [filters]); // Trigger re-fetch every time the filters change
 
     const handleFilterChange = (e) => {
         setFilters({ ...filters, [e.target.name]: e.target.value });
