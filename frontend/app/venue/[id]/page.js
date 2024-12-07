@@ -24,7 +24,7 @@ export default function VenuePage({ params }) {
     useEffect(() => {
         const fetchVenue = async () => {
             try {
-                const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NjExMjhiMjBhNmI2YTYwYzFhIiwiaWF0IjoxNzMzNDg4MTAwLCJleHAiOjE3MzM0OTE3MDB9.etIqE8SlkKVCJMuEzahxvOEUdIWZc_WhCvV6hlF-9Cw"; // Replace with your actual token
+                const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTg3OTMyLCJleHAiOjE3MzM1OTE1MzJ9.2Bfj5ngUyrGx7PQCk0ZH5Pjd4ueN5CN0FFp0PO46BQo"; // Replace with your actual token
                 const requestOptions = {
                     method: 'GET',
                     headers: {
