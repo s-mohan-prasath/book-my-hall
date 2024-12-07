@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 function AddVenueModal({ isOpen, onClose, onSubmit }) {
     if (!isOpen) return null;
 
     const [venueName, setVenueName] = useState('');
-    const [venueType, setVenueType] = useState('');
+    const [venueType, setVenueType] = useState('hall');
     const [seatingCapacity, setSeatingCapacity] = useState('');
     const [blockName, setBlockName] = useState('');
     const [projector, setProjector] = useState(true);
@@ -73,11 +72,12 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
 
             if (response.ok) {
                 console.log(result);
-                onSubmit(result.data.venue); // Call the onSubmit callback with venue data
-                onClose(); // Close the modal or form
+                onSubmit(result.data); // Call the onSubmit callback with venue data
+                onClose();// Close the modal or form
             } else {
                 console.error("Error response:", result);
             }
+
         } catch (error) {
             console.error("Error adding venue:", error.message);
         }
