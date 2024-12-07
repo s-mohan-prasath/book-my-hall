@@ -30,7 +30,7 @@ export default function BookingForm({ venueId, isOpen, onOpenChange, scrollBehav
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTkyODg1LCJleHAiOjE3MzM1OTY0ODV9.zVzxTBZZylTJx-EPU08MN7dqj3iuccZY2DMu18Qqxog`
+                    "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTk2ODE5LCJleHAiOjE3MzM2MDA0MTl9.jSmV0dG-N46svU_8HauAXIpN_p8SMPFN9BvS7tKySJ0`
                 },
                 body: JSON.stringify(bookingData)
             });

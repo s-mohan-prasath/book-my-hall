@@ -161,7 +161,7 @@ const VenuesTab = () => {
 
     const fetchVenues = async () => {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTkyODg1LCJleHAiOjE3MzM1OTY0ODV9.zVzxTBZZylTJx-EPU08MN7dqj3iuccZY2DMu18Qqxog';
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTk2ODE5LCJleHAiOjE3MzM2MDA0MTl9.jSmV0dG-N46svU_8HauAXIpN_p8SMPFN9BvS7tKySJ0';
 
             const response = await fetch("http://localhost:5000/venue", {
                 method: 'GET',
@@ -193,7 +193,7 @@ const VenuesTab = () => {
 
         if (confirmDelete) {
             try {
-                const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTkyODg1LCJleHAiOjE3MzM1OTY0ODV9.zVzxTBZZylTJx-EPU08MN7dqj3iuccZY2DMu18Qqxog';
+                const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTk2ODE5LCJleHAiOjE3MzM2MDA0MTl9.jSmV0dG-N46svU_8HauAXIpN_p8SMPFN9BvS7tKySJ0';
 
                 const response = await fetch(`http://localhost:5000/admin/venue/${venueId}`, {
                     method: 'DELETE',
