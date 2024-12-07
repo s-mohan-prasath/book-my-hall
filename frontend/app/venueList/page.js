@@ -15,7 +15,7 @@ export default function Home() {
 
     const fetchVenues = async () => {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTUyMDc3LCJleHAiOjE3MzM1NTU2Nzd9.VRgeEWmM03cQTstbZOF9iQtOxZGdDuY1tqOsECP0wgI';
+            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTY5MzU2LCJleHAiOjE3MzM1NzI5NTZ9.KvdrhAc1rmrxiYyIvMqWLxe5IT7D6XbPOHqNW5RPoR8';
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
