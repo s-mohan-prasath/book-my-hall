@@ -1,6 +1,6 @@
 import express from 'express'
 import passport from 'passport'
-import {VenueModel} from '../../models/allModels.js'
+import { VenueModel } from '../../models/allModels.js'
 
 const Router = express()
 
@@ -12,12 +12,21 @@ const Router = express()
  * Method    GET
  */
 
-Router.get("/",passport.authenticate("jwt",{session:false}),async(req,res)=>{
-    try{
+Router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
         let venues = await VenueModel.find().populate("image")
-        return res.json({venues,message:"venues retrieved successfully"}).status(200)
-    }catch(e){
-        res.status(400).json({error:e.message,status:"failed"})
+        return res.json({ venues, message: "venues retrieved successfully" }).status(200)
+    } catch (e) {
+        res.status(400).json({ error: e.message, status: "failed" })
+    }
+})
+Router.get("/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
+    try {
+        let { _id } = req.params;
+        let venue = await VenueModel.findById(_id).populate("image")
+        return res.json({ venue, message: "venue retrieved successfully" }).status(200)
+    } catch (e) {
+        res.status(400).json({ error: e.message, status: "failed" })
     }
 })
 
