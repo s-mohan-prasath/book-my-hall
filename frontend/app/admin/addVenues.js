@@ -100,7 +100,7 @@ function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
             });
 
             // Set up headers with the Authorization token
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTY5MzU2LCJleHAiOjE3MzM1NzI5NTZ9.KvdrhAc1rmrxiYyIvMqWLxe5IT7D6XbPOHqNW5RPoR8";
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTc2ODM2LCJleHAiOjE3MzM1ODA0MzZ9.zzrQFohQZtch_IwO1nIPuSmtNe445RSB2engGkBZH9M";
 
             // Determine the endpoint and method based on whether we're adding or updating
             const endpoint = isEditing
