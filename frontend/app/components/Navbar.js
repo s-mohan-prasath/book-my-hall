@@ -22,7 +22,6 @@ export default function Navbar() {
     };
     useEffect(() => {
         let user = JSON.parse(sessionStorage.getItem("user"))
-        console.log(user)
         setUser(user)
     }, [])
 

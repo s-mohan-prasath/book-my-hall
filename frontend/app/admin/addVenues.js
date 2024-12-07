@@ -100,7 +100,7 @@ function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
             });
 
             // Set up headers with the Authorization token
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTY5MzU2LCJleHAiOjE3MzM1NzI5NTZ9.KvdrhAc1rmrxiYyIvMqWLxe5IT7D6XbPOHqNW5RPoR8";
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTg3OTMyLCJleHAiOjE3MzM1OTE1MzJ9.2Bfj5ngUyrGx7PQCk0ZH5Pjd4ueN5CN0FFp0PO46BQo";
 
             // Determine the endpoint and method based on whether we're adding or updating
             const endpoint = isEditing
@@ -171,6 +171,19 @@ function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
                             <option value="hall">Hall</option>
                             <option value="lab">Lab</option>
                             <option value="classroom">Classroom</option>
+                            <option value="auditorium">Auditorium</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Venue Type</label>
+                        <select
+                            value={venueType}
+                            onChange={(e) => setVenueType(e.target.value)}
+                            className="w-full border rounded-md p-2"
+                        >
+                            <option value="classroom">Classroom</option>
+                            <option value="lab">Lab</option>
+                            <option value="hall">Hall</option>
                             <option value="auditorium">Auditorium</option>
                         </select>
                     </div>

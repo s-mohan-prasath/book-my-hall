@@ -1,25 +1,48 @@
 'use client';
-import React from "react";
+import React, { use } from "react";
 import Image from "next/image";
-import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure, user } from "@nextui-org/react";
 
 // EVENT CALENDAR
 
 import { Calendar, dayjsLocalizer } from "react-big-calendar"
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop'
 import dayjs from "dayjs"
-import { useCallback, useState } from "react"
+import { useCallback, useState, useEffect } from "react"
 
 // ICONS
 import { MdEventSeat } from "react-icons/md";
 import { FaBuilding } from "react-icons/fa";
-import { PiMicrophoneStageFill } from "react-icons/pi";
 import { MdOutlineSevereCold } from "react-icons/md";
 import { LuProjector } from "react-icons/lu";
 import BookingForm from "./bookingForm";
 
 const DnDCalendar = withDragAndDrop(Calendar)
-export default function VenueDetails() {
+export default function VenuePage({ params }) {
+    let { id } = use(params)
+    let [venue, setVenue] = useState({})
+    useEffect(() => {
+        const fetchVenue = async () => {
+            try {
+                const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTg3OTMyLCJleHAiOjE3MzM1OTE1MzJ9.2Bfj5ngUyrGx7PQCk0ZH5Pjd4ueN5CN0FFp0PO46BQo"; // Replace with your actual token
+                const requestOptions = {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                };
+                const res = await fetch(`http://localhost:5000/venue/${id}`, requestOptions);
+                const venueData = await res.json();
+                console.log(venueData)
+                setVenue(venueData?.venue);
+            } catch (error) {
+                alert("Error fetching venue details");
+            }
+        };
+
+        fetchVenue();
+    }, [id]);
+
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [scrollBehavior, setScrollBehavior] = React.useState("inside");
 
@@ -50,23 +73,17 @@ export default function VenueDetails() {
     }, [events])
     return (
         <div className='mx-16 my-8'>
-            <h1 className="text-primary text-3xl font-bold py-5 flex justify-center lg:justify-start">Auditorium</h1>
+            <h1 className="text-primary text-3xl font-bold py-5 flex justify-center lg:justify-start">{venue?.name}</h1>
             <div className="flex flex-wrap justify-center lg:grid grid-cols-[1.8fr,1fr,1fr] grid-rows-[200px,200px] gap-5">
-                <div className="box row-span-2">
-                    <Image className="w-full h-full object-cover rounded" src='/images/large.jpg' alt='Venue Images' width={500} height={400} />
-                </div>
-                <div className="box">
-                    <Image className="w-full h-full object-cover rounded" src='/images/img1.jpg' alt='Venue Images' width={500} height={400} />
-                </div>
-                <div className="box">
-                    <Image className="w-full h-full object-cover rounded" src='/images/img2.jpg' alt='Venue Images' width={500} height={400} />
-                </div>
-                <div className="box">
-                    <Image className="w-full h-full object-cover rounded" src='/images/img3.jpg' alt='Venue Images' width={500} height={400} />
-                </div>
+                {
+                    venue?.image?.images?.map(({ url }, key) => <div className="box" key={key}>
+                        <Image className="w-full h-full object-cover rounded" src={"http://localhost:5000/get-image/" + url} alt='Venue Images' width={500} height={400} />
+                    </div>)
+                }
                 <div className="box flex justify-center items-center relative" onClick={onOpen} >
                     <Image className="w-full h-full object-cover rounded brightness-50" src='/images/img6.jpg' alt='Venue Images' width={500} height={400} />
-                    <span className="absolute text-lg text-white cursor-pointer">See More</span> </div>
+                    <span className="absolute text-lg text-white cursor-pointer">See More</span>
+                </div>
             </div>
             <div className=' border border-seconadary-outline rounded-sm mt-5 px-8'>
                 <h2 className="p-3 text-2xl font-bold">Features</h2>
@@ -74,22 +91,19 @@ export default function VenueDetails() {
             <div className='border border-seconadary-outline rounded-sm mt-5 px-8 flex justify-between items-center flex-wrap'>
                 <div className='my-8 p-1 flex flex-col justify-center items-center w-64 text-seconadary-outline text-lg'><MdEventSeat size={60} style={{ color: "#cf1839" }} />
                     <p className='text-black text-lg font-bold mt-2'>Seating Capacity</p>
-                    <p id='seat-count'>500</p></div>
+                    <p id='seat-count'>{venue?.seating_capacity}</p></div>
                 <div className='my-8 p-1 flex flex-col justify-center items-center w-64 text-seconadary-outline text-lg'><FaBuilding size={60} style={{ color: "#cf1839" }} />
                     <p className='text-black text-lg font-bold mt-2'>Block Name</p>
-                    <p id='block-name'>F Block</p></div>
-                <div className='my-8 p-1 flex flex-col justify-center items-center w-64 text-seconadary-outline text-lg'><PiMicrophoneStageFill size={60} style={{ color: "#cf1839" }} />
-                    <p className='text-black text-lg font-bold mt-2'>Podium</p>
-                    <p id='podium'>Available</p></div>
+                    <p id='block-name'>{venue?.address}</p></div>
                 <div className='my-8 p-1 flex flex-col justify-center items-center w-64 text-seconadary-outline text-lg'><MdOutlineSevereCold size={60} style={{ color: "#cf1839" }} />
                     <p className='text-black text-lg font-bold mt-2'>AC / Non AC</p>
-                    <p id='ac'>Available</p></div>
+                    <p id='ac'>{(venue?.has_ac == true) ? "Available" : "Not Available"}</p></div>
                 <div className='my-8 p-1 flex flex-col justify-center items-center w-64 text-seconadary-outline text-lg'><LuProjector size={60} style={{ color: "#cf1839" }} />
                     <p className='text-black text-lg font-bold mt-2'>Projector</p>
-                    <p id='projector'>Available</p></div>
+                    <p id='projector'>{(venue?.has_projector == true) ? "Available" : "Not Available"}</p></div>
             </div>
             <div className="flex flex-row justify-center md:justify-end m-8 "><button className='bg-primary text-white border border-primary p-2 rounded' onClick={onOpenRequestModal}>REQUEST FOR BOOKING </button></div>
-            <div style={{ marginBottom: "100px", padding: "0 40px" }}>
+            <div style={{ marginBottom: "100px", padding: "0" }}>
                 <h1 className="text-primary" style={{ fontWeight: "bold", fontSize: "40px", padding: "10px" }}>Event Calendar</h1>
                 <DnDCalendar
                     localizer={localizer}

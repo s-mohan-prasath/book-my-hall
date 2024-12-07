@@ -59,7 +59,7 @@ export default function Admin() {
 
     return (
         <div className="m-0 p-0 w-full">
-            <div className="bg-black p-5 flex gap-10 justify-center">
+            <div className="bg-black p-5 flex flex-wrap gap-2 justify-center">
                 {tabs.map((tab, index) => (
                     <button
                         key={index}
@@ -68,7 +68,7 @@ export default function Admin() {
                             setSearchTerm("");
                             setFilterStatus("pending");
                         }}
-                        className={`bg-black rounded px-5 py-1.5 duration-300 text-white md:text-xl
+                        className={`bg-black rounded px-3 py-2 duration-300 text-white text-sm md:text-xl
                             ${activeTab === index ? 'bg-primary' : 'bg-black border border-primary'}`}
                     >
                         {tab.name}
