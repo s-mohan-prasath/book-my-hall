@@ -139,6 +139,7 @@
 
 import React, { useState, useEffect } from 'react';
 import AddVenueModal from './addVenues.js';
+import Cookies from 'js-cookie';
 
 const VenuesTab = () => {
     const [venues, setVenues] = useState([]);
@@ -161,12 +162,12 @@ const VenuesTab = () => {
 
     const fetchVenues = async () => {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTgzNzUwLCJleHAiOjE3MzM1ODczNTB9.oSZwsEMi7tY0xYbbKAXrHd8sdX01yEaaPfO18yljSfU';
+            const adminAuthToken = Cookies.get("admin_auth_token");
 
             const response = await fetch("http://localhost:5000/venue", {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${adminAuthToken}`,
                     'Content-Type': 'application/json',
                 }
             });
@@ -193,12 +194,12 @@ const VenuesTab = () => {
 
         if (confirmDelete) {
             try {
-                const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTgzNzUwLCJleHAiOjE3MzM1ODczNTB9.oSZwsEMi7tY0xYbbKAXrHd8sdX01yEaaPfO18yljSfU';
+                const adminAuthToken = Cookies.get("admin_auth_token");
 
                 const response = await fetch(`http://localhost:5000/admin/venue/${venueId}`, {
                     method: 'DELETE',
                     headers: {
-                        'Authorization': `Bearer ${token}`,
+                        'Authorization': `Bearer ${adminAuthToken}`,
                         'Content-Type': 'application/json',
                     },
                 });

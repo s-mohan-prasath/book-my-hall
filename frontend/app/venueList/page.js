@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import '../styles/venueList.css';
+import Cookies from 'js-cookie';
 
 const apiUrl = 'http://localhost:5000/venue';
 
@@ -15,12 +16,12 @@ export default function Home() {
 
     const fetchVenues = async () => {
         try {
-            const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTk2ODE5LCJleHAiOjE3MzM2MDA0MTl9.jSmV0dG-N46svU_8HauAXIpN_p8SMPFN9BvS7tKySJ0';
+            const authToken = Cookies.get("auth_token");
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${authToken}`,
                     'Content-Type': 'application/json',
                 }
             });

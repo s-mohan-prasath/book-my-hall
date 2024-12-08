@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 
 export default function UsersTab({ searchTerm }) {
@@ -8,11 +9,12 @@ export default function UsersTab({ searchTerm }) {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
+                const adminAuthToken = Cookies.get("admin_auth_token");
                 // Replace with your actual backend API endpoint
                 const response = await fetch('http://localhost:5000/admin/users', {
                     method: 'GET',
                     headers: {
-                        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTkwMTcwLCJleHAiOjE3MzM1OTM3NzB9.ICYsoyjxoPJP6FAcGnKdKrdtHKEy8j50P-3zcd4QX7w`, // Assuming you store JWT in localStorage
+                        'Authorization': `Bearer ${adminAuthToken}`, // Assuming you store JWT in localStorage
                         'Content-Type': 'application/json'
                     }
                 });

@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from "react";
 import { Modal, ModalContent, ModalBody, Button } from "@nextui-org/react";
+import Cookies from "js-cookie";
 
 export default function BookingForm({ venueId, isOpen, onOpenChange, scrollBehavior, onCloseRequestModal }) {
     const [eventName, setEventName] = useState("");
@@ -26,11 +27,13 @@ export default function BookingForm({ venueId, isOpen, onOpenChange, scrollBehav
         };
 
         try {
+            const authToken = Cookies.get("auth_token");
+
             const response = await fetch("http://localhost:5000/booking/", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTk2ODE5LCJleHAiOjE3MzM2MDA0MTl9.jSmV0dG-N46svU_8HauAXIpN_p8SMPFN9BvS7tKySJ0`
+                    "Authorization": `Bearer ${authToken}`
                 },
                 body: JSON.stringify(bookingData)
             });

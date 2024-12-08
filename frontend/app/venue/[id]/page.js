@@ -17,11 +17,11 @@ import EventCalendar from "./EventCalendar";
 export default function VenuePage({ params }) {
     let { id } = use(params)
     let authToken = Cookies.get("auth_token")
+    console.log(authToken)
     let [venue, setVenue] = useState({})
     useEffect(() => {
         const fetchVenue = async () => {
             try {
-                const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTkwMTcwLCJleHAiOjE3MzM1OTM3NzB9.ICYsoyjxoPJP6FAcGnKdKrdtHKEy8j50P-3zcd4QX7w"; // Replace with your actual token
                 const requestOptions = {
                     method: 'GET',
                     headers: {

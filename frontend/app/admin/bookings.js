@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import React, { useState, useEffect, useMemo } from 'react';
 
 export default function BookingsTab({ searchTerm, filterStatus }) {
@@ -6,11 +7,12 @@ export default function BookingsTab({ searchTerm, filterStatus }) {
     useEffect(() => {
         const fetchBookings = async () => {
             try {
-                const response = await fetch('http://localhost:5000/booking/', {
+                const adminAuthToken = Cookies.get("admin_auth_token");
+                const response = await fetch('http://localhost:5000/admin/booking/', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTk2ODE5LCJleHAiOjE3MzM2MDA0MTl9.jSmV0dG-N46svU_8HauAXIpN_p8SMPFN9BvS7tKySJ0`, // Adjust according to your auth setup
+                        'Authorization': `Bearer ${adminAuthToken}`, // Adjust according to your auth setup
                     },
                 });
 
