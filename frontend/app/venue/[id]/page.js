@@ -106,6 +106,7 @@ export default function VenuePage({ params }) {
             </Modal>
 
             <BookingForm
+                venueId={id}
                 isOpen={isRequestModalOpen}
                 onOpenChange={onOpenRequestModalChange}
                 scrollBehavior={scrollBehavior}

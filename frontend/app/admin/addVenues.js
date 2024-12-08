@@ -1,18 +1,52 @@
-"use client"
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 
-function AddVenueModal({ isOpen, onClose, onSubmit }) {
+function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
     if (!isOpen) return null;
 
     const [venueName, setVenueName] = useState('');
+    const [venueType, setVenueType] = useState('hall');
     const [seatingCapacity, setSeatingCapacity] = useState('');
     const [blockName, setBlockName] = useState('');
-    const [podium, setPodium] = useState('yes');
-    const [projector, setProjector] = useState('yes');
-    const [ac, setAc] = useState('yes');
+    const [projector, setProjector] = useState(true);
+    const [ac, setAc] = useState(true);
     const [images, setImages] = useState([]);
+    const [existingImages, setExistingImages] = useState([]);
     const [errors, setErrors] = useState({});
+    const [isEditing, setIsEditing] = useState(false);
+
+    // Reset form when modal is opened or closed
+    useEffect(() => {
+        if (initialVenueData) {
+            // Editing an existing venue
+            setIsEditing(true);
+            setVenueName(initialVenueData.name || '');
+            setVenueType(initialVenueData.type || 'hall');
+            setSeatingCapacity(initialVenueData.seating_capacity?.toString() || '');
+            setBlockName(initialVenueData.address || '');
+            setProjector(initialVenueData.has_projector ?? true);
+            setAc(initialVenueData.has_ac ?? true);
+
+            // Handle existing images
+            if (initialVenueData.image && initialVenueData.image.images) {
+                setExistingImages(initialVenueData.image.images);
+            } else {
+                setExistingImages([]);
+            }
+            setImages([]);
+        } else {
+            // Adding a new venue
+            setIsEditing(false);
+            setVenueName('');
+            setVenueType('hall');
+            setSeatingCapacity('');
+            setBlockName('');
+            setProjector(true);
+            setAc(true);
+            setImages([]);
+            setExistingImages([]);
+        }
+        setErrors({});
+    }, [initialVenueData, isOpen]);
 
     const handleImageUpload = (e) => {
         const newImages = Array.from(e.target.files);
@@ -21,6 +55,10 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
 
     const handleImageDelete = (index) => {
         setImages((prevImages) => prevImages.filter((_, i) => i !== index)); // Remove the image at the specified index
+    };
+
+    const handleExistingImageDelete = (index) => {
+        setExistingImages((prevImages) => prevImages.filter((_, i) => i !== index));
     };
 
     const validateForm = () => {
@@ -45,46 +83,58 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
             // Prepare venue data as JSON string
             const venueData = JSON.stringify({
                 name: venueName,
-                type: "hall",
+                type: venueType,
                 seating_capacity: parseInt(seatingCapacity),
                 address: blockName,
-                has_projector: true, // Fixed typo: changed 'has_project' to 'has_projector'
-                has_ac: true
+                has_projector: projector,
+                has_ac: ac,
+                ...(isEditing && { _id: initialVenueData._id }) // Include ID for update
             });
 
             // Append venue data and images
-            formData.append('venueData', venueData); // venueData as JSON string
+            formData.append('venueData', venueData);
+
+            // Append new images
             images.forEach((image) => {
-                formData.append('venue-images', image); // Append each image
+                formData.append('venue-images', image);
             });
 
             // Set up headers with the Authorization token
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbl9pZCI6IjY3NTJjOTdmYzkzMzI2OGNmOTY3NTZmNSIsInR5cGUiOiJ2aWV3LW9ubHkiLCJpYXQiOjE3MzM0Nzg4NDUsImV4cCI6MTczMzU2NTI0NX0.yrrutkNN5xop4pvVMQQr7RMP9rCYoiUYN_iQsJTexrA"; // Replace with your actual token
+            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTkyODg1LCJleHAiOjE3MzM1OTY0ODV9.zVzxTBZZylTJx-EPU08MN7dqj3iuccZY2DMu18Qqxog";
+
+            // Determine the endpoint and method based on whether we're adding or updating
+            const endpoint = isEditing
+                ? `http://localhost:5000/admin/venue/${initialVenueData._id}`
+                : "http://localhost:5000/admin/venue/";
+            const method = isEditing ? 'PATCH' : 'POST';
+
             const requestOptions = {
-                method: 'POST',
+                method: method,
                 body: formData,
                 headers: {
-                    Authorization: `Bearer ${token}`, // Authorization header
+                    Authorization: `Bearer ${token}`,
                 },
             };
 
-            // Make the POST request
-            const response = await fetch("http://localhost:5000/admin/venue/", requestOptions);
+            // Make the request
+            const response = await fetch(endpoint, requestOptions);
             const result = await response.json();
 
             if (response.ok) {
                 console.log(result);
-                onSubmit(result.data.venue); // Call the onSubmit callback with venue data
+                onSubmit(result.venue); // Call the onSubmit callback with venue data
                 onClose(); // Close the modal or form
+                alert(isEditing ? "Venue updated Successfully." : "Venue added Successfully.");
             } else {
                 console.error("Error response:", result);
+                alert(`Error: ${result.error || 'Something went wrong'}`);
             }
+
         } catch (error) {
-            console.error("Error adding venue:", error.message);
+            console.error("Error submitting venue:", error.message);
+            alert(`Error: ${error.message}`);
         }
     };
-
-
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -95,7 +145,9 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
                 >
                     &times;
                 </button>
-                <h2 className="text-2xl font-semibold text-primary mb-4">Add Venue</h2>
+                <h2 className="text-2xl font-semibold text-primary mb-4">
+                    {isEditing ? 'Edit Venue' : 'Add Venue'}
+                </h2>
                 <form className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium mb-1">Venue Name</label>
@@ -111,14 +163,14 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
                     <div>
                         <label className="block text-sm font-medium mb-1">Venue Type</label>
                         <select
-                            value={podium}
-                            onChange={(e) => setPodium(e.target.value)}
+                            value={venueType}
+                            onChange={(e) => setVenueType(e.target.value)}
                             className="w-full border rounded-md p-2"
                         >
-                            <option value="hall">Hall</option>
+                            <option value="classroom">Classroom</option>
                             <option value="lab">Lab</option>
-                            <option value="classroom">Classroom</option>
-                            <option value="classroom">Classroom</option>
+                            <option value="hall">Hall</option>
+                            <option value="auditorium">Auditorium</option>
                         </select>
                     </div>
                     <div>
@@ -133,7 +185,7 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
                         {errors.seatingCapacity && <p className="text-red-500 text-sm">{errors.seatingCapacity}</p>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium mb-1">Block Name</label>
+                        <label className="block text-sm font-medium mb-1">Address</label>
                         <input
                             type="text"
                             value={blockName}
@@ -144,25 +196,14 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
                         {errors.blockName && <p className="text-red-500 text-sm">{errors.blockName}</p>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium mb-1">Podium Availability</label>
-                        <select
-                            value={podium}
-                            onChange={(e) => setPodium(e.target.value)}
-                            className="w-full border rounded-md p-2"
-                        >
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-                    <div>
                         <label className="block text-sm font-medium mb-1">Projector Availability</label>
                         <select
                             value={projector}
                             onChange={(e) => setProjector(e.target.value)}
                             className="w-full border rounded-md p-2"
                         >
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
                         </select>
                     </div>
                     <div>
@@ -172,8 +213,8 @@ function AddVenueModal({ isOpen, onClose, onSubmit }) {
                             onChange={(e) => setAc(e.target.value)}
                             className="w-full border rounded-md p-2"
                         >
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
                         </select>
                     </div>
                     <div>
