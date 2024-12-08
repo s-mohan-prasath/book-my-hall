@@ -30,7 +30,7 @@ export default function SignIn() {
             if (response.ok) {
                 let data = await response.json();
                 let token = data.token;
-                document.cookie = `auth_token=${token}; path=/; max-age=${60 * 60}`;
+                document.cookie = `auth_token=${token}; path=/; max-age=${24 * 60 * 60}`;
                 sessionStorage.setItem("user", JSON.stringify(data?.user))
                 window.location.href = "/venueList"
             }

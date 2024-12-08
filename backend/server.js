@@ -15,6 +15,7 @@ import AdminVenue from './api/admin/venue/index.js'
 import AdminAuth from './api/admin/auth/index.js'
 import Booking from './api/booking/index.js'
 import AdminUsers from './api/admin/users/index.js'
+import AdminBooking from './api/admin/booking/index.js'
 
 dotenv.config()
 const app = express()
@@ -44,6 +45,7 @@ app.use("/venue", Venue)
 app.use("/admin/venue", AdminVenue)
 app.use("/booking", Booking)
 app.use("/admin/users", AdminUsers)
+app.use("/admin/booking", AdminBooking)
 
 let PORT = 5000
 app.listen(PORT, () => {

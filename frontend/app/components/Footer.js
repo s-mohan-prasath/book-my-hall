@@ -14,15 +14,15 @@ export default function Footer() {
                     <p className="footer-description">Easiest Way to Secure Your Event Space!</p>
                     {/* Find, Book, and Celebrate with Ease / Seamless Venue Booking for Every Event*/}
                     <div className="footer-social">
-                        <a href="#" aria-label="LinkedIn">
+                        <Link href="/" aria-label="LinkedIn">
                             <FaLinkedin size={24} color={"#cf1839"} />
-                        </a>
-                        <a href="#" aria-label="Instagram">
+                        </Link>
+                        <Link href="/" aria-label="Instagram">
                             <FaInstagram size={24} color={"#cf1839"} />
-                        </a>
-                        <a href="#" aria-label="YouTube">
+                        </Link>
+                        <Link href="/" aria-label="YouTube">
                             <FaYoutubeSquare size={24} color={"#cf1839"} />
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div className="footer-right">

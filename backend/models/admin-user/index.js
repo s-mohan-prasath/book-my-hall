@@ -61,7 +61,7 @@ AdminUserSchema.statics.findByEmailAndPassword = async ({ email, password }) => 
     if (!doesPasswordMatch) {
         throw new Error("Invalid password.");
     }
-
+    user.password = null
     return user;
 };
 

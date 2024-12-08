@@ -1,44 +1,50 @@
 import { NextResponse } from "next/server";
 
 export async function middleware(request) {
-    const protectedRoutes = ["/venueList", "/admin", "/venue"]; // Define protected pages
+    const adminPages = ["/admin",]; // Admin-only pages
+    const userPages = ["/venue", "/venueList", "/profile"]; // User-only pages
     const { pathname } = request.nextUrl;
 
-    // console.log("Middleware triggered for path: ", pathname);
+    const adminAuthToken = request.cookies.get("admin_auth_token"); // Admin token
+    const userAuthToken = request.cookies.get("auth_token"); // Normal user token
 
-    // Retrieve the authToken from cookies (accessible in both if and else blocks)
-    const authToken = request.cookies.get("auth_token"); // Retrieve the token from cookies
-    // console.log("authToken:", authToken);
-
-    // Check if the current route is protected
-    if (protectedRoutes.includes(pathname)) {
-        // console.log("Protected route accessed: ", pathname);
-
-        if (!authToken) {
-            // console.log("No auth token found. Redirecting to login...");
-            const loginUrl = new URL("/login", request.url); // Redirect to login page
-            return NextResponse.redirect(loginUrl);
-        }
-
-        // Optionally, you can validate the token here (e.g., via API call)
-    } else {
-        // If authToken is available, send it for verification
-        if (authToken) {
-            try {
-                const response = await fetch(`http://localhost:5000/auth/verify-token?token=${authToken.value}`);
-                const data = await response.json();
-                if (response.status !== 200) {
-                    // console.log("Token is invalid, redirecting to login...");
-                    const loginUrl = new URL("/login", request.url);
-                    return NextResponse.redirect(loginUrl);
-                }
-                // console.log("Token is valid", data);  
-            } catch (error) {
-                // console.error("Error verifying token", error);
-                const loginUrl = new URL("/login", request.url); // Redirect to login page in case of error
+    try {
+        // Admin Route Validation
+        if (adminPages.includes(pathname)) {
+            if (!adminAuthToken) {
+                const loginUrl = new URL("/adminLogin", request.url); // Redirect to admin login
                 return NextResponse.redirect(loginUrl);
             }
+
+            // Verify Admin Token
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify-token?token=${adminAuthToken.value}`);
+
+            if (response.status !== 200) {
+                const notAuthorizedUrl = new URL("/not-authorized", request.url); // Redirect unauthorized users
+                return NextResponse.redirect(notAuthorizedUrl);
+            }
         }
+
+        // User Route Validation
+        if (userPages.includes(pathname)) {
+            if (!userAuthToken) {
+                const loginUrl = new URL("/login", request.url); // Redirect to normal login
+                return NextResponse.redirect(loginUrl);
+            }
+
+            // Verify User Token
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify-token?token=${userAuthToken.value}`);
+
+            if (response.status !== 200) {
+                const notAuthorizedUrl = new URL("/not-authorized", request.url); // Redirect unauthorized users
+                return NextResponse.redirect(notAuthorizedUrl);
+            }
+        }
+    } catch (error) {
+        console.error("Error in middleware:", error);
+
+        const errorUrl = new URL("/error", request.url); // Redirect to a generic error page
+        return NextResponse.redirect(errorUrl);
     }
 
     return NextResponse.next(); // Allow request to proceed if authenticated

@@ -19,7 +19,7 @@ Router.post("/signin", async (req, res) => {
         await ValidateAdminSignIn(credentials);
         const user = await AdminUserModel.findByEmailAndPassword(credentials);
         const token = await user.generateJwtToken();
-        res.status(200).json({ token, status: "success",token});
+        res.status(200).json({ token, status: "success", token, admin_user: user });
     } catch (error) {
         return res.status(400).json({ error: error.message });
     }

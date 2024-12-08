@@ -1,11 +1,11 @@
 "use client";
 import Link from 'next/link';
-import '../../styles/signup.login.css';
+import '../styles/signup.login.css';
 import { useRouter } from 'next/navigation';
 
 export default function SignIn() {
     const router = useRouter();
-    async function makeAdminLogIn(e) {
+    async function handleAdminLogin(e) {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
@@ -21,7 +21,11 @@ export default function SignIn() {
                 },
             });
             if (response.ok) {
-                router.push('/admin')
+                let data = await response.json();
+                let token = data.token;
+                document.cookie = `admin_auth_token=${token}; path=/; max-age=${24 * 60 * 60}`;
+                sessionStorage.setItem("admin_user", JSON.stringify(data?.admin_user))
+                window.location.href = "/admin"
             }
             else {
                 document.getElementById('error').innerText = "Invalid Admin Credential";
@@ -35,7 +39,7 @@ export default function SignIn() {
     }
 
     return (
-        <form action="" onSubmit={makeAdminLogIn} className="shadow-custom w-80 md:w-96 bg-primary-sign my-[10vh] mx-auto rounded-md p-8">
+        <form action="" onSubmit={handleAdminLogin} className="shadow-custom w-80 md:w-96 bg-primary-sign my-[10vh] mx-auto rounded-md p-8">
             <h1 className='text-primary mb-8 text-3xl font-bold'>Admin Login</h1>
             <div className="flex flex-col gap-5 relative custom">
                 <input className='border-0 border-b-2 [border-color:#222222] w-full h-9 bg-transparent text-seconadary focus:outline-none text-s[15px] ' type="email" id="email" name="email" placeholder="" />

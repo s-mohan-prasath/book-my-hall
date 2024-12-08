@@ -11,7 +11,7 @@ export default function LogIn() {
         const password = document.getElementById('password').value;
 
         try {
-            let response = await fetch('http://localhost:5000/auth/signin', {
+            let response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signin`, {
                 method: "POST",
                 body: JSON.stringify({
                     email, password
@@ -20,11 +20,10 @@ export default function LogIn() {
                     "Content-Type": "application/json",
                 },
             });
-
             if (response.ok) {
                 let data = await response.json();
                 let token = data.token;
-                document.cookie = `auth_token=${token}; path=/; max-age=${60 * 60}`;
+                document.cookie = `auth_token=${token}; path=/; max-age=${24 * 60 * 60}`;
                 sessionStorage.setItem("user", JSON.stringify(data?.user))
                 window.location.href = "/venueList"
             }
