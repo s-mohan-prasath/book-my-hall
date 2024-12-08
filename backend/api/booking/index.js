@@ -15,12 +15,13 @@ const Router = express.Router();
  */
 Router.get("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
-        let bookings = await BookingModel.findById(req.user?.user_id).populate("venue")
-        return res.json({ message: "bookings retrieved successfully", "bookings": bookings })
+        let bookings = await BookingModel.find({ user: req.user?.user_id }).populate("venue");
+        return res.json({ message: "Bookings retrieved successfully", bookings });
     } catch (error) {
         return res.status(404).json({ status: "failed", error: error.message });
     }
 });
+
 
 Router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {

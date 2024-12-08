@@ -24,7 +24,7 @@ export default function VenuePage({ params }) {
     useEffect(() => {
         const fetchVenue = async () => {
             try {
-                const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTg3OTMyLCJleHAiOjE3MzM1OTE1MzJ9.2Bfj5ngUyrGx7PQCk0ZH5Pjd4ueN5CN0FFp0PO46BQo"; // Replace with your actual token
+                const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTkwMTcwLCJleHAiOjE3MzM1OTM3NzB9.ICYsoyjxoPJP6FAcGnKdKrdtHKEy8j50P-3zcd4QX7w"; // Replace with your actual token
                 const requestOptions = {
                     method: 'GET',
                     headers: {
@@ -141,6 +141,7 @@ export default function VenuePage({ params }) {
             </Modal>
 
             <BookingForm
+                venueId={id}
                 isOpen={isRequestModalOpen}
                 onOpenChange={onOpenRequestModalChange}
                 scrollBehavior={scrollBehavior}

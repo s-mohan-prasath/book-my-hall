@@ -1,28 +1,44 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
-export default function BookingsTab({
-    events,
-    setEvents,
-    searchTerm,
-    filterStatus
-}) {
+export default function BookingsTab({ searchTerm, filterStatus }) {
+    const [events, setEvents] = useState([]);
+
+    useEffect(() => {
+        const fetchBookings = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/booking/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTk2ODE5LCJleHAiOjE3MzM2MDA0MTl9.jSmV0dG-N46svU_8HauAXIpN_p8SMPFN9BvS7tKySJ0`, // Adjust according to your auth setup
+                    },
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    setEvents(data.bookings);
+                } else {
+                    console.error('Failed to fetch bookings:', data.error);
+                }
+            } catch (error) {
+                console.error('Error fetching bookings:', error);
+            }
+        };
+
+        fetchBookings();
+    }, []);
+
     // Filtered and Searched Events
     const filteredEvents = useMemo(() => {
         return events.filter(event => {
             const matchesSearch =
-                event.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                event.eventName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                event.hall.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                event.email.toLowerCase().includes(searchTerm.toLowerCase());
+                event.event_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                event.venue.name.toLowerCase().includes(searchTerm.toLowerCase());
 
             const matchesStatus =
                 filterStatus === "all"
                     ? true
-                    : (
-                        (filterStatus === "pending" && !event.status) ||
-                        (filterStatus === "confirmed" && event.status === "confirmed") ||
-                        (filterStatus === "declined" && event.status === "declined")
-                    );
+                    : filterStatus === event.status;
 
             return matchesSearch && matchesStatus;
         });
@@ -52,10 +68,13 @@ export default function BookingsTab({
                     className="border mx-10 py-5 px-10 sm:flex justify-between rounded-md shadow-md bg-white mb-4"
                 >
                     <div className="flex flex-col gap-2">
-                        <h3 className="text-xl text-primary font-semibold">{event.hall}</h3>
-                        <p><strong>Name :</strong> {event.name}</p>
-                        <p><strong>Event :</strong> {event.eventName}</p>
-                        <p><strong>Email :</strong> {event.email}</p>
+                        <h3 className="text-xl text-primary font-semibold">{event.venue.name}</h3>
+                        <p><strong>Name :</strong> {event.event_name}</p>
+                        <p><strong>Description :</strong> {event.event_desc}</p>
+                        <p><strong>Start :</strong> {new Date(event.event_start).toLocaleString()}</p>
+                        <p><strong>End :</strong> {new Date(event.event_end).toLocaleString()}</p>
+                        <p><strong>People Count :</strong> {event.people_count}</p>
+                        <p><strong>Status :</strong> {event.status}</p>
                     </div>
 
                     <div className="mt-5 flex sm:flex-col sm:my-auto gap-4">

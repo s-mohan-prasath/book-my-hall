@@ -84,8 +84,6 @@ export default function Admin() {
                     tabs[activeTab].content
                 ) : activeTab === 1 ? (
                     <BookingsTab
-                        events={events}
-                        setEvents={setEvents}
                         searchTerm={searchTerm}
                         filterStatus={filterStatus}
                     />
@@ -97,7 +95,7 @@ export default function Admin() {
                 ) : activeTab === 3 ? (
                     <UsersTab
                         searchTerm={searchTerm}
-                        usersData={eventsData}
+                    // usersData={eventsData}
                     />
                 ) : activeTab === 4 ? (
                     <VenuesTab /> // Replace previous venues rendering with VenuesTab component

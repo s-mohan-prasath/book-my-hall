@@ -160,20 +160,6 @@ function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
                         />
                         {errors.venueName && <p className="text-red-500 text-sm">{errors.venueName}</p>}
                     </div>
-
-                    <div>
-                        <label className="block text-sm font-medium mb-1">Venue Type</label>
-                        <select
-                            value={venueType}
-                            onChange={(e) => setVenueType(e.target.value)}
-                            className="w-full border rounded-md p-2"
-                        >
-                            <option value="hall">Hall</option>
-                            <option value="lab">Lab</option>
-                            <option value="classroom">Classroom</option>
-                            <option value="auditorium">Auditorium</option>
-                        </select>
-                    </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">Venue Type</label>
                         <select
