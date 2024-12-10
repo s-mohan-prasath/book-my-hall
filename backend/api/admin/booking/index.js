@@ -34,7 +34,7 @@ Router.patch("/:_id", passport.authenticate("jwt", { session: false }), async (r
         let bookingData = req.body;
         let { _id } = req.params
         await ValidateAdminUpdateBooking(bookingData)
-        let updatedBooking = await BookingModel.updateOne({ _id }, { ...bookingData })
+        let updatedBooking = await BookingModel.findOneAndUpdate({ _id }, { ...bookingData })
         return res.json({ message: "bookings retrieved successfully", "booking": updatedBooking })
     } catch (error) {
         return res.status(404).json({ status: "failed", error: error.message });
