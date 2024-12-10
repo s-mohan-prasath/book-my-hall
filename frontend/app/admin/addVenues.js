@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 
 function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
@@ -100,7 +101,7 @@ function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
             });
 
             // Set up headers with the Authorization token
-            const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjc1MmI5NDBjN2UyN2Y3OWVkYjFjOTRhIiwiaWF0IjoxNzMzNTkyODg1LCJleHAiOjE3MzM1OTY0ODV9.zVzxTBZZylTJx-EPU08MN7dqj3iuccZY2DMu18Qqxog";
+            const adminAuthToken = Cookies.get("admin_auth_token");
 
             // Determine the endpoint and method based on whether we're adding or updating
             const endpoint = isEditing
@@ -112,7 +113,7 @@ function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
                 method: method,
                 body: formData,
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    'Authorization': `Bearer ${adminAuthToken}`,
                 },
             };
 

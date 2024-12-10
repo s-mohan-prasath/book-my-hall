@@ -28,6 +28,7 @@ Router.get("/", passport.authenticate("jwt", { session: false }), async (req, re
  * Access    Private
  * Method    PATCH
  */
+
 Router.patch("/:_id", passport.authenticate("jwt", { session: false }), async (req, res) => {
     try {
         let bookingData = req.body;
