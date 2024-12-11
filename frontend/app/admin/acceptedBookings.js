@@ -35,9 +35,9 @@ export default function AcceptedBookingsTab({ events, searchTerm }) {
                     ) : (
                         filteredEvents.map((event, index) => (
                             <tr key={event._id} className={`border-b ${index % 2 === 0 ? "bg-white" : "bg-gray-100"}`}>
-                                <td className="py-2 px-4">{event.venue.name}</td>
+                                <td className="py-2 px-4">{event.venue?.name}</td>
                                 <td className="py-2 px-4">{event.event_name}</td>
-                                <td className="py-2 px-4">{event.email}</td>
+                                <td className="py-2 px-4">{event.user}</td>
                                 <td className="py-2 px-4">{event.phone_number}</td>
                                 <td className="py-2 px-4">{event.people_count}</td>
                             </tr>
@@ -48,3 +48,4 @@ export default function AcceptedBookingsTab({ events, searchTerm }) {
         </div>
     );
 }
+

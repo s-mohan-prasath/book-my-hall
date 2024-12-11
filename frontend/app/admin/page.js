@@ -1,5 +1,107 @@
+// "use client";
+// import React, { useState } from "react";
+// import AddVenueModal from './addVenues.js';
+// import Dashboard from './dashboard.js';
+// import BookingsTab from './bookings.js';
+// import AcceptedBookingsTab from './acceptedBookings.js';
+// import UsersTab from './users.js';
+// import VenuesTab from './venues.js'; // Import the new VenuesTab component
+
+// export default function Admin() {
+//     const [activeTab, setActiveTab] = useState(0);
+//     const [searchTerm, setSearchTerm] = useState("");
+//     const [filterStatus, setFilterStatus] = useState("pending");
+
+//     const eventsData = [
+//         { name: "Jane Smith", hall: "Conference Room", email: "example2@example.com", eventName: "Tech Conference", phoneNumber: "234-567-8901" },
+//     ];
+
+//     const [events, setEvents] = useState(eventsData.map(event => ({ ...event, status: null })));
+
+//     const tabs = [
+//         { name: "Dashboard", content: <Dashboard events={events} /> },
+//         { name: "Bookings", content: null },
+//         { name: "Accepted Bookings", content: null },
+//         { name: "Users", content: null },
+//         { name: "Venues", content: null },
+//     ];
+
+//     const renderSearchAndFilter = () => (
+//         <div className="flex flex-col md:flex-row justify-between items-center mb-6 px-10">
+//             <input
+//                 type="text"
+//                 placeholder="Search events or users..."
+//                 value={searchTerm}
+//                 onChange={(e) => setSearchTerm(e.target.value)}
+//                 className="w-full md:w-2/5 p-2 border border-black rounded-md mb-2 md:mb-0 "
+//             />
+//             {(activeTab === 1) && (
+//                 <select
+//                     value={filterStatus}
+//                     onChange={(e) => setFilterStatus(e.target.value)}
+//                     className="w-full md:w-1/5 p-2 border rounded-md border-black"
+//                 >
+//                     <option value="pending">Pending</option>
+//                     <option value="all">All Events</option>
+//                     <option value="confirmed">Confirmed</option>
+//                     <option value="declined">Declined</option>
+//                 </select>
+//             )}
+//         </div>
+//     );
+
+//     return (
+//         <div className="m-0 p-0 w-full">
+//             <div className="bg-black p-5 flex flex-wrap gap-2 justify-center">
+//                 {tabs.map((tab, index) => (
+//                     <button
+//                         key={index}
+//                         onClick={() => {
+//                             setActiveTab(index);
+//                             setSearchTerm("");
+//                             setFilterStatus("pending");
+//                         }}
+//                         className={`bg-black rounded px-3 py-2 duration-300 text-white text-sm md:text-xl
+//                             ${activeTab === index ? 'bg-primary' : 'bg-black border border-primary'}`}
+//                     >
+//                         {tab.name}
+//                     </button>
+//                 ))}
+//             </div>
+
+//             <div className="mt-10 p-5 md:w-full mx-auto rounded">
+//                 {/* Add search functionality for Bookings and Users */}
+//                 {(activeTab === 1 || activeTab === 2 || activeTab === 3) && renderSearchAndFilter()}
+
+//                 {activeTab === 0 ? (
+//                     tabs[activeTab].content
+//                 ) : activeTab === 1 ? (
+//                     <BookingsTab
+//                         searchTerm={searchTerm}
+//                         filterStatus={filterStatus}
+//                     />
+//                 ) : activeTab === 2 ? (
+//                     <AcceptedBookingsTab
+//                         events={events}
+//                         searchTerm={searchTerm}
+//                     />
+//                 ) : activeTab === 3 ? (
+//                     <UsersTab
+//                         searchTerm={searchTerm}
+//                     // usersData={eventsData}
+//                     />
+//                 ) : activeTab === 4 ? (
+//                     <VenuesTab /> // Replace previous venues rendering with VenuesTab component
+//                 ) : (
+//                     <p>{tabs[activeTab].content}</p>
+//                 )}
+//             </div>
+//         </div>
+//     );
+// }
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 import AddVenueModal from './addVenues.js';
 import Dashboard from './dashboard.js';
 import BookingsTab from './bookings.js';
@@ -11,19 +113,49 @@ export default function Admin() {
     const [activeTab, setActiveTab] = useState(0);
     const [searchTerm, setSearchTerm] = useState("");
     const [filterStatus, setFilterStatus] = useState("pending");
+    const [events, setEvents] = useState([]);
 
-    const eventsData = [
-        { name: "Jane Smith", hall: "Conference Room", email: "example2@example.com", eventName: "Tech Conference", phoneNumber: "234-567-8901" },
-    ];
+    // Fetch events when the component mounts
+    useEffect(() => {
+        const fetchBookings = async () => {
+            try {
+                const adminAuthToken = Cookies.get("admin_auth_token");
+                const response = await fetch("http://localhost:5000/admin/booking/", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${adminAuthToken}`,
+                    },
+                });
 
-    const [events, setEvents] = useState(eventsData.map(event => ({ ...event, status: null })));
+                const data = await response.json();
+                if (response.ok) {
+                    setEvents(data.bookings);
+                } else {
+                    console.error("Failed to fetch bookings:", data.error);
+                }
+            } catch (error) {
+                console.error("Error fetching bookings:", error);
+            }
+        };
+
+        fetchBookings();
+    }, []);
+
+    const updateEvents = (updatedEvent) => {
+        // Update events state when a booking is confirmed or declined
+        const updatedEvents = events.map((event) =>
+            event._id === updatedEvent._id ? updatedEvent : event
+        );
+        setEvents(updatedEvents);
+    };
 
     const tabs = [
         { name: "Dashboard", content: <Dashboard events={events} /> },
-        { name: "Bookings", content: null },
-        { name: "Accepted Bookings", content: null },
-        { name: "Users", content: null },
-        { name: "Venues", content: null },
+        { name: "Bookings", content: <BookingsTab events={events} updateEvents={updateEvents} searchTerm={searchTerm} filterStatus={filterStatus} /> },
+        { name: "Accepted Bookings", content: <AcceptedBookingsTab events={events} searchTerm={searchTerm} /> },
+        { name: "Users", content: <UsersTab searchTerm={searchTerm} /> },
+        { name: "Venues", content: <VenuesTab /> },
     ];
 
     const renderSearchAndFilter = () => (
@@ -70,31 +202,9 @@ export default function Admin() {
             </div>
 
             <div className="mt-10 p-5 md:w-full mx-auto rounded">
-                {/* Add search functionality for Bookings and Users */}
                 {(activeTab === 1 || activeTab === 2 || activeTab === 3) && renderSearchAndFilter()}
 
-                {activeTab === 0 ? (
-                    tabs[activeTab].content
-                ) : activeTab === 1 ? (
-                    <BookingsTab
-                        searchTerm={searchTerm}
-                        filterStatus={filterStatus}
-                    />
-                ) : activeTab === 2 ? (
-                    <AcceptedBookingsTab
-                        events={events}
-                        searchTerm={searchTerm}
-                    />
-                ) : activeTab === 3 ? (
-                    <UsersTab
-                        searchTerm={searchTerm}
-                    // usersData={eventsData}
-                    />
-                ) : activeTab === 4 ? (
-                    <VenuesTab /> // Replace previous venues rendering with VenuesTab component
-                ) : (
-                    <p>{tabs[activeTab].content}</p>
-                )}
+                {tabs[activeTab].content}
             </div>
         </div>
     );
