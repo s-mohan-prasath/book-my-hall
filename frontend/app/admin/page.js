@@ -14,13 +14,6 @@ export default function Admin() {
 
     const eventsData = [
         { name: "Jane Smith", hall: "Conference Room", email: "example2@example.com", eventName: "Tech Conference", phoneNumber: "234-567-8901" },
-        { name: "Mike Johnson", hall: "Banquet Hall", email: "example3@example.com", eventName: "Birthday Party", phoneNumber: "345-678-9012" },
-        { name: "Alice Williams", hall: "Ballroom", email: "alice@example.com", eventName: "Gala Dinner", phoneNumber: "456-789-0123" },
-        { name: "Emily Davis", hall: "Meeting Room A", email: "emily@example.com", eventName: "Business Workshop", phoneNumber: "678-901-2345" },
-        { name: "Chris Martin", hall: "Outdoor Pavilion", email: "chris@example.com", eventName: "Music Concert", phoneNumber: "789-012-3456" },
-        { name: "Olivia Lee", hall: "Lounge Area", email: "olivia@example.com", eventName: "Networking Event", phoneNumber: "890-123-4567" },
-        { name: "David Harris", hall: "Small Conference Room", email: "david@example.com", eventName: "Team Meeting", phoneNumber: "901-234-5678" },
-        { name: "Sophia Wilson", hall: "Rooftop Terrace", email: "sophia@example.com", eventName: "Sunset Party", phoneNumber: "012-345-6789" }
     ];
 
     const [events, setEvents] = useState(eventsData.map(event => ({ ...event, status: null })));

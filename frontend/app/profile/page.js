@@ -25,7 +25,7 @@ const BookingCard = ({ booking }) => {
     const formattedDate = formatDate(booking.event_start);
 
     return (
-        <div className="p-4 border md:w-72 rounded-lg shadow-md bg-white group transition-all duration-300 hover:shadow-2xl">
+        <div className="p-4 border w-72 rounded-lg shadow-md bg-white group transition-all duration-300 hover:shadow-2xl">
             <h1 className="font-semibold text-primary text-lg mb-2">
                 <strong>Venue: </strong>
                 {booking.venue?.name || 'Venue Name Not Available'}
