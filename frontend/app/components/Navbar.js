@@ -48,38 +48,23 @@ export default function Navbar() {
 
                     {/* Desktop Navigation */}
                     <ul className="hidden md:flex flex-wrap gap-7 my-auto">
-                        <li><Link href="/" className="bg-primary px-4 py-1.5 rounded hover:bg-black border border-primary border-2">Home</Link></li>
+
 
                         {/* User Navigation */}
                         {authToken && !adminAuthToken && (
                             <>
-                                <li><Link href="/profile" className="bg-primary px-4 py-1.5 rounded hover:bg-black border border-primary border-2">Profile</Link></li>
-                                <li><Link href="/venueList" className="bg-primary px-4 py-1.5 rounded hover:bg-black border border-primary border-2">Search Venues</Link></li>
-                                <li>
-                                    <button
-                                        onClick={handleUserLogout}
-                                        className="bg-primary px-4 py-1.5 rounded hover:bg-black border border-primary border-2"
-                                    >
-                                        Logout
-                                    </button>
-                                </li>
+                                <li><Link href="/" className="bg-primary px-4 py-1.5 rounded hover:bg-black border-primary border-2">Home</Link></li>
+                                <li><Link href="/venueList" className="bg-primary px-4 py-1.5 rounded hover:bg-black border-primary border-2">Search Venues</Link></li>
+                                <li><Link href="/profile" className="bg-primary px-4 py-1.5 rounded hover:bg-black border-primary border-2">Profile</Link></li>
+                                <li><span onClick={handleUserLogout} className="bg-primary px-4 py-1.5 rounded hover:bg-black border-primary border-2">Logout</span></li>
+
                             </>
                         )}
 
                         {/* Admin Navigation */}
                         {adminAuthToken && (
                             <>
-                                <li><Link href="/admin" className="bg-primary px-4 py-1.5 rounded hover:bg-black border border-primary border-2">Dashboard</Link></li>
-                                <li><Link href="/admin/users" className="bg-primary px-4 py-1.5 rounded hover:bg-black border border-primary border-2">Users</Link></li>
-                                <li><Link href="/admin/bookings" className="bg-primary px-4 py-1.5 rounded hover:bg-black border border-primary border-2">Bookings</Link></li>
-                                <li>
-                                    <button
-                                        onClick={handleAdminLogout}
-                                        className="bg-primary px-4 py-1.5 rounded hover:bg-black border border-primary border-2"
-                                    >
-                                        Logout
-                                    </button>
-                                </li>
+                                <li><span onClick={handleAdminLogout} className="bg-primary px-4 py-1.5 rounded hover:bg-black border-primary border-2">Logout</span></li>
                             </>
                         )}
 

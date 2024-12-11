@@ -133,11 +133,10 @@ export default function BookingsTab({ searchTerm, filterStatus }) {
                     <div className="mt-5 flex sm:flex-col sm:my-auto gap-4">
                         {event.status === "accepted" || event.status === "declined" ? (
                             <p
-                                className={`font-semibold ${
-                                    event.status === "accepted"
-                                        ? "text-green-600"
-                                        : "text-red-600"
-                                }`}
+                                className={`font-semibold ${event.status === "accepted"
+                                    ? "text-green-600"
+                                    : "text-red-600"
+                                    }`}
                             >
                                 {event.status === "accepted" ? "Accepted" : "Declined"}
                             </p>

@@ -78,7 +78,7 @@ export default function Home() {
     }, [filters]);
 
     return (
-        <div className="container px-4 md:px-8 py-6">
+        <div className="container mx-auto md:px-8 py-6">
             <h1 className="title text-3xl font-semibold text-center mb-6">Venues in our Organization</h1>
 
             <div className="filterContainer flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
@@ -86,7 +86,7 @@ export default function Home() {
                     name="address"
                     value={filters.address}
                     onChange={handleFilterChange}
-                    className="filterDropdown p-2 border rounded-md"
+                    className="filterDropdown w-36 md:w-52 p-2 border rounded-md"
                 >
                     <option value="">All</option>
                     {uniqueAddresses.map((address) => (
@@ -101,16 +101,17 @@ export default function Home() {
                     placeholder="Max seating capacity"
                     value={filters.seating_capacity}
                     onChange={handleFilterChange}
-                    className="filterInput p-2 border rounded-md"
+                    className="filterInput w-36 md:w-52 p-2 border rounded-md"
                 />
             </div>
 
             {venues.length > 0 ? (
-                <div className="flex flex-col md:flex-row flex-wrap gap-16 justify-center p-10">
+                <div className="flex px-auto flex-col md:flex-row flex-wrap gap-10 justify-center p-7">
                     {venues.map((venue) => (
                         <div
                             key={venue.id}
-                            className="bg-white md:w-[20%] p-8 border-2 rounded-lg shadow-lg hover:shadow-xl transition-all"
+                            className="bg-white md:w-72 p-8 border-2 rounded-lg shadow-lg hover:shadow-xl transition-all cursor-pointer active:scale-95"
+                            onClick={() => router.push(`/venue/${venue._id}`)} // Navigate to details page
                         >
                             <h3 className="text-2xl font-bold text-red-500 mb-4">{venue.name}</h3>
 
@@ -130,13 +131,6 @@ export default function Home() {
 
                             <p className="text-gray-600">Address: {venue.address}</p>
                             <p className="text-gray-600">Seating Capacity: {venue.seating_capacity}</p>
-
-                            <button
-                                className="mt-4 bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-600"
-                                onClick={() => router.push(`/venue/${venue._id}`)} // Navigate to details page
-                            >
-                                Details
-                            </button>
                         </div>
                     ))}
                 </div>
