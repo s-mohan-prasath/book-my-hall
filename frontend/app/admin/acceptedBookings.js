@@ -22,8 +22,6 @@ export default function AcceptedBookingsTab({ events, searchTerm }) {
                     <tr className="bg-primary text-white">
                         <th className="py-2 px-4 border text-left">Venue</th>
                         <th className="py-2 px-4 border text-left">Event Name</th>
-                        <th className="py-2 px-4 border text-left">Email</th>
-                        <th className="py-2 px-4 border text-left">Phone Number</th>
                         <th className="py-2 px-4 border text-left">People Count</th>
                     </tr>
                 </thead>
@@ -37,8 +35,6 @@ export default function AcceptedBookingsTab({ events, searchTerm }) {
                             <tr key={event._id} className={`border-b ${index % 2 === 0 ? "bg-white" : "bg-gray-100"}`}>
                                 <td className="py-2 px-4">{event.venue?.name}</td>
                                 <td className="py-2 px-4">{event.event_name}</td>
-                                <td className="py-2 px-4">{event.user}</td>
-                                <td className="py-2 px-4">{event.phone_number}</td>
                                 <td className="py-2 px-4">{event.people_count}</td>
                             </tr>
                         ))

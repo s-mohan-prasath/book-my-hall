@@ -119,7 +119,7 @@ const VenuesTab = () => {
 
                         {venue.image ? (
                             <Image
-                                src={`http://localhost:5000/get-image/${venue?.image?.images[0].url}`}
+                                src={`http://localhost:5000/get-image/${venue["image"]["images"]?.at(0)["url"]}`}
                                 alt="Venue"
                                 className="mb-4 w-full h-52 object-cover rounded-md"
                                 width={500}
@@ -137,12 +137,7 @@ const VenuesTab = () => {
                         )}
 
                         <div className="flex justify-center gap-2 mt-4">
-                            <button
-                                className="bg-green-500 text-white px-4 py-2 rounded"
-                                onClick={() => handleEditVenue(venue)}
-                            >
-                                Edit
-                            </button>
+
                             <button
                                 className="bg-red-500 text-white px-4 py-2 rounded"
                                 onClick={() => handleDeleteVenue(venue._id)}

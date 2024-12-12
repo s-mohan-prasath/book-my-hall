@@ -1,9 +1,7 @@
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
-
 function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
-    if (!isOpen) return null;
-
+    // Hooks must be called at the top
     const [venueName, setVenueName] = useState('');
     const [venueType, setVenueType] = useState('hall');
     const [seatingCapacity, setSeatingCapacity] = useState('');
@@ -15,10 +13,9 @@ function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
     const [errors, setErrors] = useState({});
     const [isEditing, setIsEditing] = useState(false);
 
-    // Reset form when modal is opened or closed
     useEffect(() => {
+        if (!isOpen) return; // Ensure the effect only runs when modal is open
         if (initialVenueData) {
-            // Editing an existing venue
             setIsEditing(true);
             setVenueName(initialVenueData.name || '');
             setVenueType(initialVenueData.type || 'hall');
@@ -26,16 +23,9 @@ function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
             setBlockName(initialVenueData.address || '');
             setProjector(initialVenueData.has_projector ?? true);
             setAc(initialVenueData.has_ac ?? true);
-
-            // Handle existing images
-            if (initialVenueData.image && initialVenueData.image.images) {
-                setExistingImages(initialVenueData.image.images);
-            } else {
-                setExistingImages([]);
-            }
+            setExistingImages(initialVenueData.image?.images || []);
             setImages([]);
         } else {
-            // Adding a new venue
             setIsEditing(false);
             setVenueName('');
             setVenueType('hall');
@@ -48,6 +38,9 @@ function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
         }
         setErrors({});
     }, [initialVenueData, isOpen]);
+
+    if (!isOpen) return null; // Now safe to return null
+
 
     const handleImageUpload = (e) => {
         const newImages = Array.from(e.target.files);
