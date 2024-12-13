@@ -11,7 +11,7 @@ export default function BookingsTab({ events, updateEvents, searchTerm, filterSt
                 setLoading(true);
                 try {
                     const adminAuthToken = Cookies.get("admin_auth_token");
-                    const response = await fetch("http://localhost:5000/admin/booking/", {
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/booking/`, {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",
@@ -40,7 +40,7 @@ export default function BookingsTab({ events, updateEvents, searchTerm, filterSt
     const updateBookingStatus = async (id, newStatus) => {
         try {
             const adminAuthToken = Cookies.get("admin_auth_token");
-            const response = await fetch(`http://localhost:5000/admin/booking/${id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/booking/${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",

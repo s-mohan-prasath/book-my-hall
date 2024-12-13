@@ -11,7 +11,7 @@ export default function SignIn() {
         const password = document.getElementById('password').value;
 
         try {
-            let response = await fetch('http://localhost:5000/admin/auth/signin', {
+            let response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/auth/signin`, {
                 method: "POST",
                 body: JSON.stringify({
                     email, password

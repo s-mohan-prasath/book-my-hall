@@ -29,7 +29,7 @@ export default function BookingForm({ venueId, isOpen, onOpenChange, scrollBehav
         try {
             const authToken = Cookies.get("auth_token");
 
-            const response = await fetch("http://localhost:5000/booking/", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking/`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

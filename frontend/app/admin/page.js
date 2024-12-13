@@ -19,7 +19,7 @@ export default function Admin() {
         const fetchBookings = async () => {
             try {
                 const adminAuthToken = Cookies.get("admin_auth_token");
-                const response = await fetch("http://localhost:5000/admin/booking/", {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/booking/`, {
                     method: "GET",
                     headers: {
                         "Content-Type": "application/json",

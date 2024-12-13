@@ -98,8 +98,8 @@ function AddVenueModal({ isOpen, onClose, onSubmit, initialVenueData }) {
 
             // Determine the endpoint and method based on whether we're adding or updating
             const endpoint = isEditing
-                ? `http://localhost:5000/admin/venue/${initialVenueData._id}`
-                : "http://localhost:5000/admin/venue/";
+                ? `${process.env.NEXT_PUBLIC_API_URL}/admin/venue/${initialVenueData._id}`
+                : `${process.env.NEXT_PUBLIC_API_URL}/admin/venue/`;
             const method = isEditing ? 'PATCH' : 'POST';
 
             const requestOptions = {

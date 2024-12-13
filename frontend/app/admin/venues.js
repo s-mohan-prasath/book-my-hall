@@ -27,7 +27,7 @@ const VenuesTab = () => {
         try {
             const adminAuthToken = Cookies.get("admin_auth_token");
 
-            const response = await fetch("http://localhost:5000/venue", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/venue`, {
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${adminAuthToken}`,
@@ -59,7 +59,7 @@ const VenuesTab = () => {
             try {
                 const adminAuthToken = Cookies.get("admin_auth_token");
 
-                const response = await fetch(`http://localhost:5000/admin/venue/${venueId}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin/venue/${venueId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${adminAuthToken}`,
@@ -119,7 +119,7 @@ const VenuesTab = () => {
 
                         {venue.image ? (
                             <Image
-                                src={`http://localhost:5000/get-image/${venue["image"]["images"]?.at(0)["url"]}`}
+                                src={`${process.env.NEXT_PUBLIC_API_URL}/get-image/${venue["image"]["images"]?.at(0)["url"]}`}
                                 alt="Venue"
                                 className="mb-4 w-full h-52 object-cover rounded-md"
                                 width={500}

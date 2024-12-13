@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'; // Import router
 import '../styles/venueList.css';
 import Cookies from 'js-cookie';
 
-const apiUrl = 'http://localhost:5000/venue';
+const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/venue`;
 
 export default function Home() {
     const [venues, setVenues] = useState([]);
@@ -54,7 +54,7 @@ export default function Home() {
 
         if (filters.seating_capacity) {
             filteredVenues = filteredVenues.filter(venue =>
-                venue.seating_capacity == parseInt(filters.seating_capacity)
+                venue.seating_capacity >= parseInt(filters.seating_capacity)
             );
         }
 
@@ -117,7 +117,7 @@ export default function Home() {
 
                             {venue.image ? (
                                 <img
-                                    src={`http://localhost:5000/get-image/${venue.image.images[0].url}`}
+                                    src={`${process.env.NEXT_PUBLIC_API_URL}/get-image/${venue.image.images[0].url}`}
                                     alt="Venue"
                                     className="mb-4 w-full h-32 object-cover rounded-md"
                                 />
@@ -129,8 +129,8 @@ export default function Home() {
                                 />
                             )}
 
-                            <p className="text-gray-600">Address: {venue.address}</p>
-                            <p className="text-gray-600">Seating Capacity: {venue.seating_capacity}</p>
+                            <p className="text-gray-600"><strong>Location : </strong>{venue.address}</p>
+                            <p className="text-gray-600"><strong>Seating Capacity : </strong>{venue.seating_capacity}</p>
                         </div>
                     ))}
                 </div>

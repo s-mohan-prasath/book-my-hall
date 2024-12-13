@@ -49,7 +49,7 @@ const ProfilePage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const bookingsApiUrl = 'http://localhost:5000/booking/user';
+    const bookingsApiUrl = `${process.env.NEXT_PUBLIC_API_URL}/booking/user`;
 
     const fetchBookings = async () => {
         const authToken = Cookies.get('auth_token');
@@ -112,7 +112,14 @@ const ProfilePage = () => {
             <h1 className="text-3xl text-primary font-bold text-center mb-6">Your Bookings</h1>
             <section>
                 {bookings.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 place-items-center">
+                    <div style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        maxWidth: "100%",
+                        gap: "2rem",
+                        flexWrap: "wrap"
+                    }}
+                    >
                         {bookings.map((booking) => (
                             <BookingCard key={booking._id} booking={booking} />
                         ))}
