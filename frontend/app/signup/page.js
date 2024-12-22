@@ -18,7 +18,7 @@ export default function SignIn() {
             return;
         }
         try {
-            let response = await fetch('http://localhost:5000/auth/signup', {
+            let response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/signup`, {
                 method: "POST",
                 body: JSON.stringify({
                     name, email, password, phoneNumber
@@ -28,20 +28,34 @@ export default function SignIn() {
                 },
             });
             if (response.ok) {
-                router.push('/login')
+                let data = await response.json();
+                let token = data.token;
+                document.cookie = `auth_token=${token}; path=/; max-age=${24 * 60 * 60}`;
+                sessionStorage.setItem("user", JSON.stringify(data?.user))
+                window.location.href = "/venueList"
             }
             const data = await response.json();
             if (data.error == "User Already Exists") {
+                alert("User Already Exists")
                 document.getElementById('error').textContent = "User Already Exists";
                 document.getElementById('error').style.marginBottom = "12px";
             }
+            if (data.error) {
+                alert("Please enter valid details")
+                document.getElementById('error').textContent = "Please enter valid details ";
+                document.getElementById('error').style.marginBottom = "12px";
+            }
+            if (!data.error) {
+                document.cookie = data.token;
+            }
+            console.log(data);
         } catch (error) {
             console.log(error.message)
         }
     }
 
     return (
-        <form action="" onSubmit={makeSignUp} className="shadow-custom w-80 md:w-96 bg-primary-sign my-[10vh] mx-auto rounded-md p-8">
+        <form action="" onSubmit={makeSignUp} className="shadow-custom w-80 md:w-96 border-2 border-primary bg-primary-sign my-[10vh] mx-auto rounded-md p-8">
             <h1 className='text-primary mb-8 text-3xl font-bold'>Sign Up</h1>
             <div className="flex flex-col gap-5 relative custom">
                 <input className=' border-0 border-b-2 [border-color:#222222] w-full h-9 bg-transparent text-seconadary focus:outline-none text-s[15px] ' type="text" id="name" name="name" placeholder="" required />
@@ -68,13 +82,8 @@ export default function SignIn() {
                 <label className='absolute left-0 top-0 transition-all duration-300 ' htmlFor="cpassword">Confirm Password</label>
                 <div className="text-center h-5 text-base text-primary" id='error'></div>
             </div >
-            <div className="flex justify-between items-center text-seconadary ">
-                <label className='flex items-center' htmlFor="remember">
-                    <input type="checkbox" id="remember" />
-                    <p className='my-0 mx-1'>Remember me</p>
-                </label>
-            </div >
-            <button className='w-full bg-primary text-white text-base font-medium rounded-md border-none p-2 mt-[10%] mb-[5%] cursor-pointer transition-all duration-300 ease-linear hover:bg-primary-dark' type="submit">Sign Up</button>
+
+            <button className='w-full bg-primary text-white text-base font-medium rounded-md border-none p-2 mt-[5%] mb-[5%] cursor-pointer transition-all duration-300 ease-linear hover:bg-primary-dark' type="submit">Sign Up</button>
             <div className="account" >
                 <p>Have an account? {" "} <Link className='text-primary underline' href={"/login"}> Sign In</Link></p>
             </div >

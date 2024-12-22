@@ -5,7 +5,6 @@ import { config } from "dotenv";
 
 config();
 
-
 const ROLE_TYPES = {
     ROOT: "root",         // Full access, including admin management
     MANAGER: "manager",   // Manage users, bookings, and other major data
@@ -38,7 +37,7 @@ AdminUserSchema.methods.generateJwtToken = function () {
     return jwt.sign(
         { admin_id: this._id.toString(), type: this.type },
         process.env.APP_SECRET,
-        { expiresIn: "1h" } // Token valid for 1 day
+        { expiresIn: "1d" }
     );
 };
 
@@ -62,13 +61,13 @@ AdminUserSchema.statics.findByEmailAndPassword = async ({ email, password }) => 
     if (!doesPasswordMatch) {
         throw new Error("Invalid password.");
     }
-
+    user.password = null
     return user;
 };
 
 // Helper Method to Update Role
 AdminUserSchema.methods.updateRole = async function (newRole) {
-    if (!["root", "manager", "view-only"].includes(newRole)) {
+    if (!Object.values(ROLE_TYPES).includes(newRole)) {
         throw new Error(`Invalid role: ${newRole}`);
     }
 
