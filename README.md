@@ -79,6 +79,121 @@ Venue Booking Application
 - *Logout*
   - Users can click on the *Log Out* button to log out of their account when they are done.
 
+## Admin Page Guidelines
+
+### Admin Login
+
+To access the admin page, follow these steps:
+
+* open mongodb compass
+* open bookmyhall database
+* inside admin-users collection add a new record by adding the following field
+
+`
+  "email": "admin@psgtech.ac.in",
+  "password": "$2a$08$qff9.2A0kpVzxe8ofRE5QuXQmXwDqwjgHxcxWxrL7DUEyeskdj1MK"
+`
+
+1. Open the admin login page by copying and pasting the following URL in your browser:
+
+http://localhost:3000/adminLogin
+
+
+2. Enter the following credentials to log in:
+
+- *Email ID*: admin@psgtech.ac.in
+- *Password*: admin123
+
+3. After successful login, you will be redirected to the *Admin Dashboard* page.
+
+---
+
+### Dashboard
+
+The *Dashboard* page provides a summary of event data:
+
+- *Total Events*: The count of all events held across all venues.
+- *Confirmed Events*: The count of events that have been confirmed.
+- *Pending Events*: The count of events that are yet to be confirmed or declined.
+- *Declined Events*: The count of events that have been declined.
+
+---
+
+### Bookings
+
+The *Bookings* page displays all bookings made by users:
+
+- Each booking card contains:
+- Venue Name
+- Description
+- Start Time
+- End Time
+- People Count
+- Status (Confirmed/Declined)
+
+- *Actions*:
+- Use the *Confirm* or *Decline* buttons to update the booking status. 
+- Changes will reflect immediately in the *Dashboard*.
+
+- *Filters*:
+- A filter and search bar are available at the top of the page for easy navigation.
+
+---
+
+### Accepted Bookings
+
+The *Accepted Bookings* page shows bookings that have been accepted by the admin. The table will display the following details:
+
+- Venue
+- Event
+- Start Time
+- End Time
+- People Count
+
+- *Search*: A search bar is available to filter bookings by venue name.
+
+---
+
+### Users
+
+The *Users* page displays the list of registered users:
+
+- Each user entry includes:
+- Name
+- Email
+- Phone Number
+
+- *Search*: A search bar is available to find specific users.
+
+---
+
+### Venues
+
+The *Venues* page allows you to manage venue information:
+
+#### Add Venue
+
+1. Click the *Add Venue* button at the top of the page to open the venue creation form.
+2. Fill in the required details (venue name, description, seating capacity, etc.) and upload images.
+3. Submit the form by clicking the *Submit* button.
+
+After submission:
+
+- A success popup will appear: "Venue added successfully".
+- The venue card will appear in the venue list, with an option to delete.
+
+#### Delete Venue
+
+- You can delete a venue by clicking the *Delete* button on the venue card.
+- Once a venue is added or deleted, changes will be reflected on the *Users* page as well.
+
+---
+
+### Notes
+
+- All changes made on the *Venues* page will automatically reflect in the *Users* page.
+- The *Bookings, **Accepted Bookings, and **Users* pages all have search and filter options for easy management.
+
 ### Venue Details Page
 
 The venueDetails page provides the following features:
